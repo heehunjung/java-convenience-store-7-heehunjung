@@ -13,7 +13,7 @@ public class ValidatorTest {
         String invalidInput = "[sidar-2]";
 
         Assertions.assertThatNoException()
-                .isThrownBy(() ->  Validator.purchaseInputFormatValidator(validInput));
+                .isThrownBy(() -> Validator.purchaseInputFormatValidator(validInput));
         Assertions.assertThatThrownBy(() -> Validator.productAndStockFormatValidator(invalidInput))
                 .isInstanceOf(IllegalArgumentException.class);
     }
@@ -25,10 +25,20 @@ public class ValidatorTest {
         String invalidInput = " [사이다-2].[감자칩-1]";
 
         Assertions.assertThatNoException()
-                        .isThrownBy(() ->  Validator.purchaseInputFormatValidator(validInput));
+                .isThrownBy(() -> Validator.purchaseInputFormatValidator(validInput));
         Assertions.assertThatThrownBy(() -> Validator.purchaseInputFormatValidator(invalidInput))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
+    @DisplayName("YesOrNoValidator_메서드_테스트_01")
+    @Test
+    void Y_N를_제외한_입력이면_예외를_발생한다() {
+        String validInput = "Y";
+        String invalidInput = "M";
 
+        Assertions.assertThatNoException()
+                .isThrownBy(() -> Validator.YesOrNoValidator(validInput));
+        Assertions.assertThatThrownBy(() -> Validator.YesOrNoValidator(invalidInput))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
 }
