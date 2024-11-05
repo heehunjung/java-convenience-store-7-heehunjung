@@ -30,9 +30,11 @@
 👷기능 요구사항 👷
 - - -
 ## Utils
-- [ ] `Validator`
-  - [ ] `purchaseInputFormatValidator` : 구매할 상품과 수량 형식이 올바르지 않은 경우
-  - [ ] `productExistenceValidator` : 존재하지 않는 상품을 입력한 경우:
+- [x] `Validator`
+  - [x] `purchaseInputFormatValidator` : 구매할 상품과 수량 형식이 올바르지 않은 경우
+    - 공백에 대한 처리 생각중...
+  - [ ] `productExistenceValidator` : 존재하지 않는 상품을 입력한 경우
+  - ? ? : 중복되는 상품을 입력한 경우 ? ? 
   - [ ] `stockAvailabilityValidator` : 구매 수량이 재고 수량을 초과한 경우
   - [ ] `YesOrNoValidator` : Y,N
 - [ ] `Parser`

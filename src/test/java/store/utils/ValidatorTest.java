@@ -1,0 +1,34 @@
+package store.utils;
+
+import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
+public class ValidatorTest {
+
+    @DisplayName("productAndStockFormatValidator_메서드_테스트_01")
+    @Test
+    void 괄호_상품명_언더바_숫자_패턴이_아닌_경우_예외를_발생한다() {
+        String validInput = "[사이다-22]";
+        String invalidInput = "[sidar-2]";
+
+        Assertions.assertThatNoException()
+                .isThrownBy(() ->  Validator.purchaseInputFormatValidator(validInput));
+        Assertions.assertThatThrownBy(() -> Validator.productAndStockFormatValidator(invalidInput))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @DisplayName("purchaseInputFormatValidator_메서드_테스트_01")
+    @Test
+    void 구매할_수량과_수량_형식이_올바르지_않은_경우_예외를_발생한다() {
+        String validInput = "[사이다-2],[감자칩-1]";
+        String invalidInput = " [사이다-2].[감자칩-1]";
+
+        Assertions.assertThatNoException()
+                        .isThrownBy(() ->  Validator.purchaseInputFormatValidator(validInput));
+        Assertions.assertThatThrownBy(() -> Validator.purchaseInputFormatValidator(invalidInput))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+
+}
