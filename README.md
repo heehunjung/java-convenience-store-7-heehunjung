@@ -33,10 +33,8 @@
 - [x] `Validator`
   - [x] `purchaseInputFormatValidator` : 구매할 상품과 수량 형식이 올바르지 않은 경우
     - 공백에 대한 처리 생각중...
-  - [ ] `productExistenceValidator` : 존재하지 않는 상품을 입력한 경우
   - ? ? : 중복되는 상품을 입력한 경우 ? ? 
-  - [ ] `stockAvailabilityValidator` : 구매 수량이 재고 수량을 초과한 경우
-  - [ ] `YesOrNoValidator` : Y,N
+  - [X] `YesOrNoValidator` : Y,N
 - [ ] `Parser`
   - [ ] `productAndStockParser` : 상품명, 수량을 파싱
 ## Domain
@@ -46,9 +44,9 @@
   - [ ] `updateStock` : 재고 관리
   - [ ] `checkStock` : 재고 체크
   - [ ] `checkPromotion` : 
+  - [ ] `productAndStockValidator` : List<Product> 돌면서 검증 : 프러덕트 클래스 내부 메서드
 - [ ] `Product` ;promotion 상품과 분리 x
-  - [ ] `getPromotion` 
-  - [ ] 
+  - [ ] `getPromotion`
 - [ ] `Promotion` 
   - [ ] `checkDate`
   - [ ] `getBuyCount`
