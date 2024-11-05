@@ -8,7 +8,7 @@ public class ValidatorTest {
 
     @DisplayName("productAndStockFormatValidator_메서드_테스트_01")
     @Test
-    void 괄호_상품명_언더바_숫자_패턴이_아닌_경우_예외를_발생한다() {
+    void 괄호_상품명_언더바_숫자_괄호_패턴이_아닌_경우_예외를_발생한다() {
         String validInput = "[사이다-22]";
         String invalidInput = "[sidar-2]";
 
@@ -39,6 +39,18 @@ public class ValidatorTest {
         Assertions.assertThatNoException()
                 .isThrownBy(() -> Validator.YesOrNoValidator(validInput));
         Assertions.assertThatThrownBy(() -> Validator.YesOrNoValidator(invalidInput))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @DisplayName("nullOrEmptyValidator_메서드_테스트_01")
+    @Test
+    void null값_또는_빈값이_들어오면_예외를_발생한다() {
+        String nullInput = null;
+        String emptyInput = " ";
+
+        Assertions.assertThatThrownBy(() -> Validator.nullOrEmptyValidator(nullInput))
+                .isInstanceOf(IllegalArgumentException.class);
+        Assertions.assertThatThrownBy(() -> Validator.nullOrEmptyValidator(emptyInput))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }

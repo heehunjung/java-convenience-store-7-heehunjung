@@ -31,6 +31,7 @@
 - - -
 ## Utils
 - [x] `Validator`
+  - [x] `nullOrEmptyValidator` : null, 빈 값을 검증
   - [x] `purchaseInputFormatValidator` : 구매할 상품과 수량 형식이 올바르지 않은 경우
     - 공백에 대한 처리 생각중...
   - ? ? : 중복되는 상품을 입력한 경우 ? ? 
