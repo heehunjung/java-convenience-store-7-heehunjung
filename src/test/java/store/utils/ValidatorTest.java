@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 public class ValidatorTest {
 
-    @DisplayName("productAndStockFormatValidator_메서드_테스트_01")
+    @DisplayName("productAndStockFormatValidator_테스트_01")
     @Test
     void 괄호_상품명_언더바_숫자_괄호_패턴이_아닌_경우_예외를_발생한다() {
         String validInput = "[사이다-22]";
@@ -20,7 +20,7 @@ public class ValidatorTest {
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
-    @DisplayName("purchaseInputFormatValidator_메서드_테스트_01")
+    @DisplayName("purchaseInputFormatValidator_테스트_01")
     @Test
     void 구매할_수량과_수량_형식이_올바르지_않은_경우_예외를_발생한다() {
         String validInput = "[사이다-2],[감자칩-1]";
@@ -32,7 +32,7 @@ public class ValidatorTest {
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
-    @DisplayName("YesOrNoValidator_메서드_테스트_01")
+    @DisplayName("YesOrNoValidator_테스트_01")
     @Test
     void Y_N를_제외한_입력이면_예외를_발생한다() {
         String validInput = "Y";
@@ -44,7 +44,7 @@ public class ValidatorTest {
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
-    @DisplayName("nullOrEmptyValidator_메서드_테스트_01")
+    @DisplayName("nullOrEmptyValidator_테스트_01")
     @Test
     void null값_또는_빈값이_들어오면_예외를_발생한다() {
         String nullInput = null;
@@ -56,7 +56,7 @@ public class ValidatorTest {
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
-    @DisplayName("duplicatedNameValidator_메서드_테스트_01")
+    @DisplayName("duplicatedNameValidator_테스트_01")
     @Test
     void 중복된_이름이_입력되면_예외를_발생한다() {
         List<String> validInput = Arrays.asList("치킨","피자","콜라");
