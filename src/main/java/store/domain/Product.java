@@ -1,16 +1,20 @@
 package store.domain;
 
 import static store.global.ErrorMessages.INVALID_INPUT_STOCK;
+import static store.global.ErrorMessages.INVALID_PRODUCT_PRICE;
+import static store.global.ErrorMessages.INVALID_PRODUCT_STOCK;
 
 public class Product {
 
     private final String name;
-
     private final int price;
     Object promotion; //  변경 예정
     private int stock;
 
     public Product(String name, int price, int stock, Object promotion) {
+        priceValidator(price);
+        stockValidator(stock);
+
         this.name = name;
         this.price = price;
         this.promotion = promotion;
@@ -39,4 +43,15 @@ public class Product {
         return promotion;
     }
 
+    private void priceValidator(int price) {
+        if (price <= 0) {
+            throw new IllegalStateException(INVALID_PRODUCT_PRICE.getMessage());
+        }
+    }
+
+    private void stockValidator(int stock) {
+        if (stock <= 0) {
+            throw new IllegalStateException(INVALID_PRODUCT_STOCK.getMessage());
+        }
+    }
 }

@@ -41,6 +41,8 @@
 - [x] `Product` 
   - [x] `updateStock` : 수량을 업데이트
   - [x] `iStockAvailable` : 물량을 체크
+  - [x] `stockValidator` : 생성 시 수량 검증
+  - [x] `priceValidator` : 생성 시 가격 검증
 - [ ] `Promotion`
   - [ ] `checkDate`
   - [ ] `getBuyCount`
