@@ -33,11 +33,17 @@
 - [x] `Validator`
   - [x] `nullOrEmptyValidator` : null, 빈 값을 검증
   - [x] `purchaseInputFormatValidator` : 구매할 상품과 수량 형식이 올바르지 않은 경우
-  - [ ] `duplicatedNameValidator` : 중복된 상품명이 입력되면 예외처리 
+  - [x] `duplicatedNameValidator` : 중복된 상품명이 입력되면 예외처리 
   - [X] `YesOrNoValidator` : Y,N 제외 입력 예외처리
 - [x] `Parser`
   - [x] `productAndStockParser` : 상품명, 수량을 파싱
 ## Domain
+- [ ] `Product` 
+  - [x] `updateStock` : 수량을 업데이트
+  - [ ] `iStockAvailable` : 물량을 체크
+- [ ] `Promotion`
+  - [ ] `checkDate`
+  - [ ] `getBuyCount`
 - [ ] `Store`
   - [ ] `List <product>`,` List <promotion>`
   - [ ] `getProducts` : 상품 정보를 출력
@@ -45,11 +51,6 @@
   - [ ] `checkStock` : 재고 체크
   - [ ] `checkPromotion` : 
   - [ ] `productAndStockValidator` : List<Product> 돌면서 검증 : 프러덕트 클래스 내부 메서드
-- [ ] `Product` ;promotion 상품과 분리 x
-  - [ ] `getPromotion`
-- [ ] `Promotion` 
-  - [ ] `checkDate`
-  - [ ] `getBuyCount`
 - [ ] `User` :
 - [ ] `Receipt` : 
 ## View
