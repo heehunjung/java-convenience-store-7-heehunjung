@@ -38,9 +38,9 @@
 - [x] `Parser`
   - [x] `productAndStockParser` : 상품명, 수량을 파싱
 ## Domain
-- [ ] `Product` 
+- [x] `Product` 
   - [x] `updateStock` : 수량을 업데이트
-  - [ ] `iStockAvailable` : 물량을 체크
+  - [x] `iStockAvailable` : 물량을 체크
 - [ ] `Promotion`
   - [ ] `checkDate`
   - [ ] `getBuyCount`

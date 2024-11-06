@@ -1,5 +1,7 @@
 package store.domain;
 
+import static store.global.ErrorMessages.INVALID_INPUT_STOCK;
+
 public class Product {
 
     private final String name;
@@ -20,5 +22,11 @@ public class Product {
 
     public int getStock() {
         return stock;
+    }
+
+    public void isStockAvailable(int stock) {
+        if (stock > this.stock) {
+            throw new IllegalArgumentException(INVALID_INPUT_STOCK.getMessage());
+        }
     }
 }
