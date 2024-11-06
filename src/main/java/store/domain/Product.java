@@ -5,6 +5,7 @@ import static store.global.ErrorMessages.INVALID_INPUT_STOCK;
 public class Product {
 
     private final String name;
+
     private final int price;
     Object promotion; //  변경 예정
     private int stock;
@@ -20,13 +21,22 @@ public class Product {
         this.stock -= stock;
     }
 
-    public int getStock() {
-        return stock;
-    }
-
     public void isStockAvailable(int stock) {
         if (stock > this.stock) {
             throw new IllegalArgumentException(INVALID_INPUT_STOCK.getMessage());
         }
     }
+
+    public int getStock() {
+        return stock;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public Object getPromotion() {
+        return promotion;
+    }
+
 }
