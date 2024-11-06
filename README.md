@@ -43,6 +43,10 @@
   - [x] `iStockAvailable` : 물량을 체크
   - [x] `stockValidator` : 생성 시 수량 검증
   - [x] `priceValidator` : 생성 시 가격 검증
+- [ ] `Range` : `Promotion` 의 기간 정보를 다루는 클래스 
+  - [ ] `isValidRange` : 기간이 유효한지 체크
+- [ ] `BuyGet` : `Promotion` 의 증정 정보를 다루는 클래스
+  - [ ] `calculateGetStock` : 프로모션 증정 수량을 계산
 - [ ] `Promotion`
   - [ ] `checkDate`
   - [ ] `getBuyCount`
@@ -55,6 +59,7 @@
   - [ ] `productAndStockValidator` : List<Product> 돌면서 검증 : 프러덕트 클래스 내부 메서드
 - [ ] `User` :
 - [ ] `Receipt` : 
+#### getter 는 생략
 ## View
 - [ ] `InputView`
 - [ ] `OutputView`
