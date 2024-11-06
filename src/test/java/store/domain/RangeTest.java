@@ -13,15 +13,15 @@ public class RangeTest {
     @Test
     void isValidRange_기능_테스트() {
         LocalDate startTime = LocalDate.of(2024,10,1);
-        LocalDate finishTime = LocalDate.of(2024,10,10);
-        LocalDate finishTime_valid = LocalDate.of(2024,12,30);
+        LocalDate endTime = LocalDate.of(2024,10,10);
+        LocalDate endTime_valid = LocalDate.of(2024,12,30);
 
-        Range invalidRange = new Range(startTime,finishTime);
-        Range validRange = new Range(startTime,finishTime_valid);
+        Range invalidRange = new Range(startTime,endTime);
+        Range validRange = new Range(startTime,endTime_valid);
 
         Assertions.assertThat(invalidRange.isValidRange(now()))
-                .isTrue();
-        Assertions.assertThat(invalidRange.validRange(now()))
                 .isFalse();
+        Assertions.assertThat(validRange.isValidRange(now()))
+                .isTrue();
     }
 }
