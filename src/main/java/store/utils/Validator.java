@@ -1,13 +1,13 @@
 package store.utils;
 
+import static store.global.ErrorMessages.INVALID_INPUT_YES_OR_NO;
 import static store.global.InputConstant.DELIMITER;
 import static store.global.InputConstant.NO_INPUT;
 import static store.global.InputConstant.PRODUCT_STOCK_PATTERN;
 import static store.global.InputConstant.YES_INPUT;
-import static store.global.InputErrorMessages.DUPLICATE_INPUT_ERROR;
-import static store.global.InputErrorMessages.INVALID_INPUT_NULL_EMPTY;
-import static store.global.InputErrorMessages.INVALID_INPUT_PATTERN;
-import static store.global.InputErrorMessages.INVALID_YES_OR_NO_INPUT;
+import static store.global.ErrorMessages.DUPLICATE_INPUT_ERROR;
+import static store.global.ErrorMessages.INVALID_INPUT_NULL_EMPTY;
+import static store.global.ErrorMessages.INVALID_INPUT_PATTERN;
 
 import java.util.HashSet;
 import java.util.List;
@@ -25,9 +25,15 @@ public class Validator {
         }
     }
 
-    public static void productAndStockFormatValidator(String input) {
-        nullOrEmptyValidator(input);
+    public static void duplicatedNameValidator(List<String> input) {
+        Set<String> uniqueNames = new HashSet<>(input);
 
+        if (uniqueNames.size() != input.size()) {
+            throw new IllegalArgumentException(DUPLICATE_INPUT_ERROR.getMessage());
+        }
+    }
+
+    public static void productAndStockFormatValidator(String input) {
         if (!input.matches(PRODUCT_STOCK_PATTERN)) {
             throw new IllegalArgumentException(INVALID_INPUT_PATTERN.getMessage());
         }
@@ -37,7 +43,7 @@ public class Validator {
         nullOrEmptyValidator(input);
 
         if (!(input == YES_INPUT || input == NO_INPUT)) {
-            throw new IllegalArgumentException(INVALID_YES_OR_NO_INPUT.getMessage());
+            throw new IllegalArgumentException(INVALID_INPUT_YES_OR_NO.getMessage());
         }
     }
 
@@ -47,10 +53,4 @@ public class Validator {
         }
     }
 
-    public static void duplicatedNameValidator(List<String> input) {
-        Set<String> uniqueNames = new HashSet<>(input);
-        if (uniqueNames.size() != input.size()) {
-            throw new IllegalArgumentException(DUPLICATE_INPUT_ERROR.getMessage());
-        }
-    }
 }
