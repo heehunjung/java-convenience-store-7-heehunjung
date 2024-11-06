@@ -34,9 +34,9 @@
   - [x] `nullOrEmptyValidator` : null, 빈 값을 검증
   - [x] `purchaseInputFormatValidator` : 구매할 상품과 수량 형식이 올바르지 않은 경우
   - [ ] `duplicatedNameValidator` : 중복된 상품명이 입력되면 예외처리 
-  - [X] `YesOrNoValidator` : Y,N
-- [ ] `Parser`
-  - [ ] `productAndStockParser` : 상품명, 수량을 파싱
+  - [X] `YesOrNoValidator` : Y,N 제외 입력 예외처리
+- [x] `Parser`
+  - [x] `productAndStockParser` : 상품명, 수량을 파싱
 ## Domain
 - [ ] `Store`
   - [ ] `List <product>`,` List <promotion>`
