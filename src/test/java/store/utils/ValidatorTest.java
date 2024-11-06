@@ -1,5 +1,7 @@
 package store.utils;
 
+import java.util.Arrays;
+import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -51,6 +53,18 @@ public class ValidatorTest {
         Assertions.assertThatThrownBy(() -> Validator.nullOrEmptyValidator(nullInput))
                 .isInstanceOf(IllegalArgumentException.class);
         Assertions.assertThatThrownBy(() -> Validator.nullOrEmptyValidator(emptyInput))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @DisplayName("duplicatedNameValidator_메서드_테스트_01")
+    @Test
+    void 중복된_이름이_입력되면_예외를_발생한다() {
+        List<String> validInput = Arrays.asList("치킨","피자","콜라");
+        List<String> invalidInput = Arrays.asList("치킨","치킨","콜라");
+
+        Assertions.assertThatNoException()
+                .isThrownBy(() -> Validator.duplicatedNameValidator(validInput));
+        Assertions.assertThatThrownBy(() -> Validator.duplicatedNameValidator(invalidInput))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }

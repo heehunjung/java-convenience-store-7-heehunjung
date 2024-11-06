@@ -11,6 +11,7 @@ import static store.global.InputErrorMessages.INVALID_YES_OR_NO_INPUT;
 import java.util.List;
 
 public class Validator {
+
     public static void purchaseInputFormatValidator(String input) {
         nullOrEmptyValidator(input);
 
