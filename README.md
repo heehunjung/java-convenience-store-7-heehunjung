@@ -44,7 +44,7 @@
   - [x] `stockValidator` : 생성 시 수량 검증
   - [x] `priceValidator` : 생성 시 가격 검증
 - [ ] `Range` : `Promotion` 의 기간 정보를 다루는 클래스 
-  - [ ] `isValidRange` : 기간이 유효한지 체크
+  - [x] `isValidRange` : 기간이 유효한지 체크
 - [ ] `BuyGet` : `Promotion` 의 증정 정보를 다루는 클래스
   - [ ] `calculateGetStock` : 프로모션 증정 수량을 계산
 - [ ] `Promotion`
