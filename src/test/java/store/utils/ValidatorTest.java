@@ -46,7 +46,7 @@ public class ValidatorTest {
     @Test
     void null값_또는_빈값이_들어오면_예외를_발생한다() {
         String nullInput = null;
-        String emptyInput = " ";
+        String emptyInput = "  ";
 
         Assertions.assertThatThrownBy(() -> Validator.nullOrEmptyValidator(nullInput))
                 .isInstanceOf(IllegalArgumentException.class);
