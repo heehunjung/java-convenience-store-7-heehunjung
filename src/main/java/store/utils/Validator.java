@@ -4,11 +4,14 @@ import static store.global.InputConstant.DELIMITER;
 import static store.global.InputConstant.NO_INPUT;
 import static store.global.InputConstant.PRODUCT_STOCK_PATTERN;
 import static store.global.InputConstant.YES_INPUT;
+import static store.global.InputErrorMessages.DUPLICATE_INPUT_ERROR;
 import static store.global.InputErrorMessages.INVALID_INPUT_NULL_EMPTY;
 import static store.global.InputErrorMessages.INVALID_INPUT_PATTERN;
 import static store.global.InputErrorMessages.INVALID_YES_OR_NO_INPUT;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Validator {
 
@@ -41,6 +44,13 @@ public class Validator {
     public static void nullOrEmptyValidator(String input) {
         if ( input == null || input.trim().isEmpty()) {
             throw new IllegalArgumentException(INVALID_INPUT_NULL_EMPTY.getMessage());
+        }
+    }
+
+    public static void duplicatedNameValidator(List<String> input) {
+        Set<String> uniqueNames = new HashSet<>(input);
+        if (uniqueNames.size() != input.size()) {
+            throw new IllegalArgumentException(DUPLICATE_INPUT_ERROR.getMessage());
         }
     }
 }
