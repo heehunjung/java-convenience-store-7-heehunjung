@@ -20,7 +20,7 @@ public class Promotion {
         return range.isValidRange(date);
     }
 
-    public int getBuyCount(int totalStock) {
+    public int getBuyStock(int totalStock) {
         return buyGet.calculateBuyStock(totalStock);
     }
 

@@ -27,7 +27,7 @@ public class PromotionTest {
 
     @DisplayName("getBuyCount_메서드_테스트_01")
     @Test
-    void getBuyCount_기능_테스트() {
+    void getBuyStock_기능_테스트() {
         LocalDate startTime = LocalDate.of(2024,10,1);
         LocalDate endTime_valid = LocalDate.of(2024,12,30);
 
@@ -37,7 +37,7 @@ public class PromotionTest {
 
         Promotion promotion = new Promotion(promotionName,three_but_one_get,validRange);
 
-        Assertions.assertThat(promotion.getBuyCount(10))
+        Assertions.assertThat(promotion.getBuyStock(10))
                 .isEqualTo(6);
     }
 }
