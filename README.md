@@ -52,17 +52,19 @@
   - [x] `checkDate` : `Range` 클래스의 `isValidRange` 를 호출 
   - [x] `getBuyCount`: `BuyGet` 클래스의 `calculateBuyStock` 를 호출 
   - [x] `calculateFreeStock` : 구매한 수량에 따라 받게되는 promotion 상품 수량을 계산
-- [x] `Store`
-  - [x] `List <product>`,` List <promotion>`
-  - [x] `findProduct` : 편의점 내 상품을 반환한다.
-  - [x] `findPromotionProduct` : 편의점 내 프로모션 상품을 반환한다.
-  - [ ] `checkStock` : 재고 체크
-  - [ ] `productAndStockValidator` : List<Product> 돌면서 검증 : 프러덕트 클래스 내부 메서드
-- [ ] `Receipt` 
+- [x] `Receipt` 
   - [x] `List<Product> products`
   - [x] `canUseMembership` : 멤버쉽 사용 가능한지 점검
   - [x] `calculatePrice` : 토탈 가격,프로모션 할인 가격을 계산
   - [x] `applyMembership` : 멤버쉽을 적용
+- [x] `Store`
+  - [x] `List <product>`,` List <promotion>`
+  - [x] `findProduct` : 편의점 내 상품을 반환한다.
+  - [x] `findPromotionProduct` : 편의점 내 프로모션 상품을 반환한다.
+  - [ ] `isValidStock` : 구매 가능한 수량인지 체크
+  - [ ] `isProductExists` : 상품이 존재하는 지 체크
+  - [ ] `checkStock` : 재고 체크
+  - [ ] `productAndStockValidator` : List<Product> 돌면서 검증 : 프러덕트 클래스 내부 메서드
 #### getter 는 생략
 ## View
 - [ ] `InputView`

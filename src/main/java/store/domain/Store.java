@@ -3,11 +3,14 @@ package store.domain;
 
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
+import static store.global.ErrorMessages.INVALID_INPUT_STOCK;
+import static store.global.ErrorMessages.PRODUCT_NOT_FOUND;
 
 import camp.nextstep.edu.missionutils.DateTimes;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import store.domain.promotion.Promotion;
 
 public class Store {
     private final List<Product> products;
@@ -23,25 +26,14 @@ public class Store {
             Product nomalProduct = findProduct(product);
             Product promotionalProduct = findPromotionProduct(product);
 
+            // 상품 존재 ?
             //메서드 1 ====================================================
-            if (nomalProduct ==  null && promotionalProduct == null) {
-                throw new IllegalStateException("잘못된 입력임 다시 입력하셈");
-            }
+            isProductExists(nomalProduct, promotionalProduct);
             //============================================================
 
+            // 수량 있음 ?
             //메서드 2 ====================================================
-            int promotionStock = 0 ;
-            int normalStock = 0 ;
-            if (promotionalProduct != null) {
-                promotionStock = promotionalProduct.getStock();
-            }
-            if (nomalProduct != null) {
-                normalStock = nomalProduct.getStock();
-            }
-
-            if (promotionStock+normalStock < stock) {
-                throw new IllegalStateException("수량   src/main/java/store/domain/Receipt.java\n버그");
-            }
+            isValidStock(stock, promotionalProduct, nomalProduct);
             // ==========================================================
 
             List<Product> purchasedProducts = new ArrayList<Product>();
@@ -87,6 +79,27 @@ public class Store {
             // ===================================================================
         });
 
+    }
+
+    private static void isProductExists(Product nomalProduct, Product promotionalProduct) {
+        if (nomalProduct ==  null && promotionalProduct == null) {
+            throw new IllegalStateException(PRODUCT_NOT_FOUND.getMessage());
+        }
+    }
+
+    private static void isValidStock(Integer stock, Product promotionalProduct, Product nomalProduct) {
+        int promotionStock = 0 ;
+        int normalStock = 0 ;
+        if (promotionalProduct != null) {
+            promotionStock = promotionalProduct.getStock();
+        }
+        if (nomalProduct != null) {
+            normalStock = nomalProduct.getStock();
+        }
+
+        if (promotionStock+normalStock < stock) {
+            throw new IllegalStateException(INVALID_INPUT_STOCK.getMessage());
+        }
     }
 
     public Product findProduct(String input) {
