@@ -50,10 +50,10 @@
 - [x] `Promotion`
   - [x] `checkDate` : `Range` 클래스의 `isValidRange` 를 호출 
   - [x] `getBuyCount`: `BuyGet` 클래스의 `calculateBuyStock` 를 호출 
-- [ ] `Store`
-  - [ ] `List <product>`,` List <promotion>`
-  - [ ] `getProducts` : 상품 정보를 출력
-  - [ ] `updateStock` : 재고 관리
+- [x] `Store`
+  - [x] `List <product>`,` List <promotion>`
+  - [x] `findProduct` : 편의점 내 상품을 반환한다.
+  - [x] `findPromotionProduct` : 편의점 내 프로모션 상품을 반환한다.
   - [ ] `checkStock` : 재고 체크
   - [ ] `checkPromotion` : 
   - [ ] `productAndStockValidator` : List<Product> 돌면서 검증 : 프러덕트 클래스 내부 메서드
