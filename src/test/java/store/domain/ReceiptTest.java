@@ -12,11 +12,48 @@ public class ReceiptTest {
     void canUseMembership_기능_테스트() {
         List<Product> products = getProducts();
 
-        Receipt receipt = new Receipt(products);
+        Receipt receipt = new Receipt(products,true);
 
         Assertions.assertThat(receipt.canUseMemberShip())
                 .isTrue();
     }
+
+    @DisplayName("금액_계산_테스트_01")
+    @Test
+    void calculatePrice_기능_테스트() {
+        List<Product> products = getProducts();
+
+        Receipt receipt = new Receipt(products,true);
+        receipt.calculatePrice();
+
+        Assertions.assertThat(receipt.getTotalPrice())
+                .isEqualTo(69000);
+        Assertions.assertThat(receipt.getPromotionPrice())
+                .isEqualTo(25000);
+    }
+
+    @DisplayName("멤버쉽_적용_테스트_01")
+    @Test
+    void applyMembership_기능_테스트() {
+        List<Product> products = getProducts();
+
+        Receipt receipt = new Receipt(products,true);
+        receipt.calculatePrice();
+        receipt.applyMembership();
+
+        Assertions.assertThat(receipt.getMembershipPrice())
+                .isEqualTo(8000);
+    }
+//    @DisplayName("applyMembership_테스트_01")
+//    @Test
+//    void applyMembership_기능_테스트() {
+//        List<Product> products = getProducts();
+//
+//        Receipt receipt = new Receipt(products);
+//
+//        Assertions.assertThat(receipt.applyMembership())
+//                .isTrue();
+//    }
 
     private List<Product> getProducts() {
         Promotion promotion = new Promotion("test", null, null);
@@ -26,7 +63,7 @@ public class ReceiptTest {
         Product product3 = new Product("콜라", 2000, 15, promotion);
         Product product4 = new Product("사이다", 3000, 20, null);
 
-        Product purchased1 = new Product(product1, 5, Boolean.FALSE);
+        Product purchased1 = new Product(product1, 5, Boolean.TRUE);
         Product purchased2 = new Product(product2, 6, Boolean.FALSE);
         Product purchased3 = new Product(product3, 7, Boolean.FALSE);
         Product purchased4 = new Product(product4, 8, Boolean.FALSE);
