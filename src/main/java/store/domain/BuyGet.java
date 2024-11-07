@@ -11,12 +11,6 @@ public class BuyGet {
 
     public int calculateBuyStock(int totalStock) {
         int setCount = getCount + buyCount;
-
-        if (totalStock <= setCount) {
-            return -1;
-            // todo : 에러 처리할지, 그냥 무시할지 외부에서 더 큰 것만 보내긴 할 것
-        }
-
         int getCount = totalStock/setCount;
 
         return getCount*buyCount;
