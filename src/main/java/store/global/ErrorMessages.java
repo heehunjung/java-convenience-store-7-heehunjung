@@ -8,6 +8,7 @@ public enum ErrorMessages {
     INVALID_INPUT_YES_OR_NO("Y 또는 N만 입력할 수 있습니다. 다시 입력해 주세요."),
     INVALID_INPUT_STOCK("재고 수량을 초과하여 구매할 수 없습니다. 다시 입력해 주세요."),
     DUPLICATE_INPUT_ERROR("중복된 상품명을 입력하셨습니다."),
+    PRODUCT_NOT_FOUND("존재하지 않는 상품입니다. 다시 입력해 주세요."),
 
     // TODO : 존재하지 않은 상품을 입력한 경우
 
