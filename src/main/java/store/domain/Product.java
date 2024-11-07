@@ -7,10 +7,10 @@ import static store.global.ErrorMessages.INVALID_PRODUCT_STOCK;
 public class Product {
 
     private final String name;
-    private final int price;
-    private final Promotion promotion;
-    private int stock;
     private final Boolean isFree;
+    private final Promotion promotion;
+    private final int price;
+    private int stock;
 
     public Product(String name, int price, int stock, Promotion promotion) {
         priceValidator(price);
@@ -20,7 +20,7 @@ public class Product {
         this.price = price;
         this.promotion = promotion;
         this.stock = stock;
-        this.isFree = false;
+        this.isFree = null;
     }
 
     public Product(Product product, int stock ,Boolean isFree) {
