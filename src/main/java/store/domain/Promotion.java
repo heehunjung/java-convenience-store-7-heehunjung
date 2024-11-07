@@ -20,7 +20,7 @@ public class Promotion {
         return range.isValidRange(date);
     }
 
-    public int getBuyStock(int totalStock) {
+    public int getTotalBuyStock(int totalStock) {
         return buyGet.calculateBuyStock(totalStock);
     }
 
@@ -34,5 +34,9 @@ public class Promotion {
 
     public Range getRange() {
         return range;
+    }
+
+    public int calculateFreeStock(int stock) {
+        return buyGet.calculateGetStock(stock);
     }
 }

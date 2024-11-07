@@ -1,22 +1,27 @@
 package store.domain;
 
 public class BuyGet {
-    private final int getCount;
-    private final int buyCount;
+    private final int getStock;
+    private final int buyStock;
 
     BuyGet(int buyCount, int getCount) {
-        this.getCount = getCount;
-        this.buyCount = buyCount;
+        this.getStock = getCount;
+        this.buyStock = buyCount;
     }
 
     public int calculateBuyStock(int totalStock) {
-        int setCount = getCount + buyCount;
+        int setCount = getStock + buyStock;
         int getCount = totalStock/setCount;
 
-        return getCount*buyCount;
+        return getCount* buyStock;
+    }
+
+    public int calculateGetStock(int buyStock) {
+       int count = buyStock/this.buyStock;
+       return count * this.getStock;
     }
 
     public boolean isPromotionAvailable(int input) {
-        return input <= buyCount;
+        return input <= buyStock;
     }
 }
