@@ -42,7 +42,7 @@ public class Validator {
     public static void YesOrNoValidator(String input) {
         nullOrEmptyValidator(input);
 
-        if (!(input == YES_INPUT || input == NO_INPUT)) {
+        if (!(input.equals(YES_INPUT) || input.equals(NO_INPUT))) {
             throw new IllegalArgumentException(INVALID_INPUT_YES_OR_NO.getMessage());
         }
     }
