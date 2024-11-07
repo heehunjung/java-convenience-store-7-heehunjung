@@ -59,9 +59,9 @@
   - [ ] `checkStock` : 재고 체크
   - [ ] `productAndStockValidator` : List<Product> 돌면서 검증 : 프러덕트 클래스 내부 메서드
 - [ ] `Receipt` 
-  - [ ] `List<Product> products`
+  - [x] `List<Product> products`
   - [ ] `applyMembership` : 멤버쉽을 적용
-  - [ ] `canUseMembership` : 멤버쉽 사용 가능한지 점검
+  - [x] `canUseMembership` : 멤버쉽 사용 가능한지 점검
 #### getter 는 생략
 ## View
 - [ ] `InputView`
