@@ -61,10 +61,8 @@
 - [ ] `Receipt` 
   - [x] `List<Product> products`
   - [x] `canUseMembership` : 멤버쉽 사용 가능한지 점검
-  - [ ] `applyMembership` : 멤버쉽을 적용
-  - [ ] `calculateTotalPrice` : 토탈 가격을 계산
-  - [ ] `calculateMembershipPrice` : 멤버쉽 할인 가격을 계산
-  - [ ] `calculatePromotionPrice` : 프로모션 할인 가격을 계산
+  - [x] `calculatePrice` : 토탈 가격,프로모션 할인 가격을 계산
+  - [x] `applyMembership` : 멤버쉽을 적용
 #### getter 는 생략
 ## View
 - [ ] `InputView`
