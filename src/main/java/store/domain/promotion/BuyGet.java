@@ -1,10 +1,10 @@
-package store.domain;
+package store.domain.promotion;
 
 public class BuyGet {
     private final int getStock;
     private final int buyStock;
 
-    BuyGet(int buyCount, int getCount) {
+    public BuyGet(int buyCount, int getCount) {
         this.getStock = getCount;
         this.buyStock = buyCount;
     }
