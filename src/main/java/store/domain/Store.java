@@ -11,7 +11,6 @@ public class Store {
         this.promotions = promotions;
     }
 
-
     public Product findProduct(String input) {
         for (Product product : products) {
             if (product.getName().equals(input) && product.getPromotion() == null ) {

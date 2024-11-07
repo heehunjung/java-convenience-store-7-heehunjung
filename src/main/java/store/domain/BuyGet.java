@@ -15,4 +15,8 @@ public class BuyGet {
 
         return getCount*buyCount;
     }
+
+    public boolean isPromotionAvailable(int input) {
+        return input <= buyCount;
+    }
 }

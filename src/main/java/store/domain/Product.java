@@ -31,18 +31,6 @@ public class Product {
         }
     }
 
-    private void priceValidator(int price) {
-        if (price <= 0) {
-            throw new IllegalStateException(INVALID_PRODUCT_PRICE.getMessage());
-        }
-    }
-
-    private void stockValidator(int stock) {
-        if (stock <= 0) {
-            throw new IllegalStateException(INVALID_PRODUCT_STOCK.getMessage());
-        }
-    }
-
     public String getName() {
         return name;
     }
@@ -57,5 +45,17 @@ public class Product {
 
     public Promotion getPromotion() {
         return promotion;
+    }
+
+    private void priceValidator(int price) {
+        if (price <= 0) {
+            throw new IllegalStateException(INVALID_PRODUCT_PRICE.getMessage());
+        }
+    }
+
+    private void stockValidator(int stock) {
+        if (stock <= 0) {
+            throw new IllegalStateException(INVALID_PRODUCT_STOCK.getMessage());
+        }
     }
 }
