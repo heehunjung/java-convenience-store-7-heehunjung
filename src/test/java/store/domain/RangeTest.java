@@ -15,13 +15,13 @@ public class RangeTest {
         LocalDate startTime = LocalDate.of(2024,10,1);
         LocalDate endTime = LocalDate.of(2024,10,10);
         LocalDate endTime_valid = LocalDate.of(2024,12,30);
-
+        LocalDate now = now().toLocalDate();
         Range invalidRange = new Range(startTime,endTime);
         Range validRange = new Range(startTime,endTime_valid);
 
-        Assertions.assertThat(invalidRange.isValidRange(now()))
+        Assertions.assertThat(invalidRange.isValidRange(now))
                 .isFalse();
-        Assertions.assertThat(validRange.isValidRange(now()))
+        Assertions.assertThat(validRange.isValidRange(now))
                 .isTrue();
     }
 }

@@ -12,8 +12,7 @@ public class Range {
         this.endTime = endTime;
     }
 
-    public boolean isValidRange(LocalDateTime now) {
-        LocalDate nowDate = now.toLocalDate();
-        return !nowDate.isBefore(startTime) && !nowDate.isAfter(endTime);
+    public boolean isValidRange(LocalDate now) {
+        return !now.isBefore(startTime) && !now.isAfter(endTime);
     }
 }
