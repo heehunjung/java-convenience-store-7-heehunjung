@@ -43,6 +43,10 @@ public class Product {
         }
     }
 
+    public int calculatePrice() {
+        return price * stock;
+    }
+
     public String getName() {
         return name;
     }
@@ -53,6 +57,10 @@ public class Product {
 
     public int getPrice() {
         return price;
+    }
+
+    public Boolean getFree() {
+        return isFree;
     }
 
     public Promotion getPromotion() {
