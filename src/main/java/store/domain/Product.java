@@ -8,10 +8,10 @@ public class Product {
 
     private final String name;
     private final int price;
-    Object promotion; //  변경 예정
+    private final Promotion promotion; //  변경 예정
     private int stock;
 
-    public Product(String name, int price, int stock, Object promotion) {
+    public Product(String name, int price, int stock, Promotion promotion) {
         priceValidator(price);
         stockValidator(stock);
 
@@ -55,7 +55,7 @@ public class Product {
         return price;
     }
 
-    public Object getPromotion() {
+    public Promotion getPromotion() {
         return promotion;
     }
 }

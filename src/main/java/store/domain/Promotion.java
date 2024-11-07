@@ -23,4 +23,16 @@ public class Promotion {
     public int getBuyCount(int totalStock) {
         return buyGet.calculateBuyStock(totalStock);
     }
+
+    public BuyGet getBuyGet() {
+        return buyGet;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Range getRange() {
+        return range;
+    }
 }
