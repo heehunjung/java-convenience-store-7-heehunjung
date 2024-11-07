@@ -47,9 +47,9 @@
   - [x] `isValidRange` : 기간이 유효한지 체크
 - [x] `BuyGet` : `Promotion` 의 증정 정보를 다루는 클래스
   - [x] `calculateBuyStock` : 입력받은 수량에 따라 가장 많은 프로모션을 받기 위해 구매해야 할 수량을 계산
-- [ ] `Promotion`
-  - [ ] `checkDate`
-  - [ ] `getBuyCount`
+- [x] `Promotion`
+  - [x] `checkDate` : `Range` 클래스의 `isValidRange` 를 호출 
+  - [x] `getBuyCount`: `BuyGet` 클래스의 `calculateBuyStock` 를 호출 
 - [ ] `Store`
   - [ ] `List <product>`,` List <promotion>`
   - [ ] `getProducts` : 상품 정보를 출력
