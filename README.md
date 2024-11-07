@@ -60,8 +60,11 @@
   - [ ] `productAndStockValidator` : List<Product> 돌면서 검증 : 프러덕트 클래스 내부 메서드
 - [ ] `Receipt` 
   - [x] `List<Product> products`
-  - [ ] `applyMembership` : 멤버쉽을 적용
   - [x] `canUseMembership` : 멤버쉽 사용 가능한지 점검
+  - [ ] `applyMembership` : 멤버쉽을 적용
+  - [ ] `calculateTotalPrice` : 토탈 가격을 계산
+  - [ ] `calculateMembershipPrice` : 멤버쉽 할인 가격을 계산
+  - [ ] `calculatePromotionPrice` : 프로모션 할인 가격을 계산
 #### getter 는 생략
 ## View
 - [ ] `InputView`
