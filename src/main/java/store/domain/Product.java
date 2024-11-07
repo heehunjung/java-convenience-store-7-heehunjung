@@ -8,8 +8,9 @@ public class Product {
 
     private final String name;
     private final int price;
-    private final Promotion promotion; //  변경 예정
+    private final Promotion promotion;
     private int stock;
+    private final Boolean isFree;
 
     public Product(String name, int price, int stock, Promotion promotion) {
         priceValidator(price);
@@ -19,6 +20,17 @@ public class Product {
         this.price = price;
         this.promotion = promotion;
         this.stock = stock;
+        this.isFree = false;
+    }
+
+    public Product(Product product, int stock ,Boolean isFree) {
+        stockValidator(stock);
+
+        this.name = product.getName();
+        this.price = product.getPrice();
+        this.promotion = product.getPromotion();
+        this.stock = stock;
+        this.isFree = isFree;
     }
 
     public void updateStock(int stock) {
