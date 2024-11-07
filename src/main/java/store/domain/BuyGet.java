@@ -24,4 +24,8 @@ public class BuyGet {
     public boolean isPromotionAvailable(int input) {
         return input <= buyStock;
     }
+
+    public boolean isPromotionAvailable(int input) {
+        return input <= buyCount;
+    }
 }
