@@ -26,15 +26,17 @@ public class Store {
             Product nomalProduct = findProduct(product);
             Product promotionalProduct = findPromotionProduct(product);
 
-            // 상품 존재 ?
+            //TODO : TRY-CATCH 추가
+            // 상품 존재
             //메서드 1 ====================================================
             isProductExists(nomalProduct, promotionalProduct);
             //============================================================
-
-            // 수량 있음 ?
+            //TODO : TRY-CATCH 추가
+            // 수량 있음
             //메서드 2 ====================================================
             isValidStock(stock, promotionalProduct, nomalProduct);
             // ==========================================================
+
 
             List<Product> purchasedProducts = new ArrayList<Product>();
 

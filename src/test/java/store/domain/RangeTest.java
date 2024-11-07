@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import store.domain.promotion.Range;
 
 public class RangeTest {
 

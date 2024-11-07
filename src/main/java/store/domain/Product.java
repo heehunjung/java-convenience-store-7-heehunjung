@@ -4,6 +4,8 @@ import static store.global.ErrorMessages.INVALID_INPUT_STOCK;
 import static store.global.ErrorMessages.INVALID_PRODUCT_PRICE;
 import static store.global.ErrorMessages.INVALID_PRODUCT_STOCK;
 
+import store.domain.promotion.Promotion;
+
 public class Product {
 
     private final String name;
