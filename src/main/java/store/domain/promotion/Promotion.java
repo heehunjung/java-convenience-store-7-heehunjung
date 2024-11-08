@@ -14,6 +14,10 @@ public class Promotion {
         this.range = range;
     }
 
+    public int getBuyStock() {
+        return buyGet.getBuyStock();
+    }
+
     public boolean checkDate(LocalDateTime now) {
         LocalDate date = now.toLocalDate();
 
