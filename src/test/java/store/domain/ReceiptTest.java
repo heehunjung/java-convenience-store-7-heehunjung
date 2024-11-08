@@ -45,16 +45,6 @@ public class ReceiptTest {
         Assertions.assertThat(receipt.getMembershipPrice())
                 .isEqualTo(8000);
     }
-//    @DisplayName("applyMembership_테스트_01")
-//    @Test
-//    void applyMembership_기능_테스트() {
-//        List<Product> products = getProducts();
-//
-//        Receipt receipt = new Receipt(products);
-//
-//        Assertions.assertThat(receipt.applyMembership())
-//                .isTrue();
-//    }
 
     private List<Product> getProducts() {
         Promotion promotion = new Promotion("test", null, null);

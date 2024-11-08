@@ -89,6 +89,7 @@ public class Store {
         }
     }
 
+    // TODO : 메서드 10줄 이상
     private static void isValidStock(Integer stock, Product promotionalProduct, Product nomalProduct) {
         int promotionStock = 0 ;
         int normalStock = 0 ;

@@ -18,19 +18,18 @@ public class Parser {
         return result;
     }
 
+    // TODO : 이거 지금 맵을 리턴하는데 맵을 받아서 추가하고 VOID 로 바꿔야할 듯 + 11줄
     private static Map<String, Integer> getStringIntegerMap(List<String> splitInput) {
         String productName = splitInput.get(0);
         int stock;
         try {
             stock = Integer.parseInt(splitInput.get(1));
         } catch (NumberFormatException e) {
-            // 프로그램 종료
             throw new NumberFormatException(PARSING_FAIL_ERROR.getMessage());
         }
 
         Map<String, Integer> result = new HashMap<>();
         result.put(productName, stock);
-
         return result;
     }
 }
