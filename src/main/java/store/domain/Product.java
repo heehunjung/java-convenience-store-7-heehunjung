@@ -4,6 +4,7 @@ import static store.global.ErrorMessages.INVALID_INPUT_STOCK;
 import static store.global.ErrorMessages.INVALID_PRODUCT_PRICE;
 import static store.global.ErrorMessages.INVALID_PRODUCT_STOCK;
 
+import java.time.LocalDateTime;
 import store.domain.promotion.Promotion;
 
 public class Product {
@@ -35,8 +36,20 @@ public class Product {
         this.isFree = isFree;
     }
 
+    public int getTotalBuyStock(int stock) {
+        return promotion.getTotalBuyStock(stock);
+    }
+
+    public int calculateFreeStock(int stock) {
+        return promotion.calculateFreeStock(stock);
+    }
+
     public void updateStock(int stock) {
         this.stock -= stock;
+    }
+
+    public boolean checkDate(LocalDateTime now) {
+        return promotion.checkDate(now);
     }
 
     public void isStockAvailable(int stock) {
