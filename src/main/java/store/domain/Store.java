@@ -21,6 +21,7 @@ public class Store {
         this.promotions = promotions;
     }
 
+    // TODO : 외부 컨트롤러로 이동할 예정
     public void run(Map<String,Integer> shoppingCarts) {
         shoppingCarts.forEach((product,stock)->{
             Product nomalProduct = findProduct(product);
@@ -41,32 +42,7 @@ public class Store {
             List<Product> purchasedProducts = new ArrayList<Product>();
 
             // 메서드3 ====================================================
-            int purchasePromotionalProductNumber = 0 ;
-            int noPromotionalProductNumber = 0 ;
-            int notFreePromotionalProductNumber = 0 ;
-            int freeProductNumber = 0 ;
-            int promotionalProductNumber = 0 ;
-            if (promotionalProduct != null ) {
-                if (promotionalProduct.getPromotion().checkDate(DateTimes.now())) {
-                    // TODO : 여기 프로모션 구매 검증 들어가야함
-                    purchasePromotionalProductNumber = promotionalProduct.getPromotion().getTotalBuyStock(stock);
-                    freeProductNumber = promotionalProduct.getPromotion().calculateFreeStock(purchasePromotionalProductNumber);
-
-                    if (stock > 0 && promotionalProduct.getStock() > 0 ) {
-                        noPromotionalProductNumber = promotionalProduct.getStock();
-                    }
-
-                    notFreePromotionalProductNumber = noPromotionalProductNumber + purchasePromotionalProductNumber;
-                    promotionalProductNumber = notFreePromotionalProductNumber + freeProductNumber;
-
-                    promotionalProduct.updateStock(promotionalProductNumber);
-
-                    Product purchasedProduct = new Product(promotionalProduct,notFreePromotionalProductNumber, FALSE);
-                    Product freeProduct = new Product(promotionalProduct,freeProductNumber, TRUE);
-                    purchasedProducts.add(purchasedProduct);
-                    purchasedProducts.add(freeProduct);
-                }
-            }
+            int promotionalProductNumber = processPromotionalProducts(stock, promotionalProduct, purchasedProducts);
             // ===================================================================
 
             int remainStock = stock - promotionalProductNumber;
@@ -83,18 +59,49 @@ public class Store {
 
     }
 
-    private static void isProductExists(Product nomalProduct, Product promotionalProduct) {
+    public int processPromotionalProducts(int stock, Product promotionalProduct,
+                                            List<Product> purchasedProducts) {
+        int purchasePromotionalProductNumber = 0 ;
+        int noPromotionalProductNumber = 0 ;
+        int notFreePromotionalProductNumber = 0 ;
+        int freeProductNumber = 0 ;
+        int promotionalProductNumber = 0 ;
+        if (promotionalProduct != null ) {
+            if (promotionalProduct.getPromotion().checkDate(DateTimes.now())) {
+                // TODO : 여기 프로모션 구매 검증 들어가야함
+                purchasePromotionalProductNumber = promotionalProduct.getTotalBuyStock(stock);
+                freeProductNumber = promotionalProduct.calculateFreeStock(purchasePromotionalProductNumber);
+
+                if (stock > 0 && promotionalProduct.getStock() > 0 ) {
+                    noPromotionalProductNumber = promotionalProduct.getStock();
+                }
+
+                notFreePromotionalProductNumber = noPromotionalProductNumber + purchasePromotionalProductNumber;
+                promotionalProductNumber = notFreePromotionalProductNumber + freeProductNumber;
+
+                promotionalProduct.updateStock(promotionalProductNumber);
+
+                Product purchasedProduct = new Product(promotionalProduct,notFreePromotionalProductNumber, FALSE);
+                Product freeProduct = new Product(promotionalProduct,freeProductNumber, TRUE);
+                purchasedProducts.add(purchasedProduct);
+                purchasedProducts.add(freeProduct);
+            }
+        }
+        return promotionalProductNumber;
+    }
+
+    public void isProductExists(Product nomalProduct, Product promotionalProduct) {
         if (nomalProduct ==  null && promotionalProduct == null) {
-            throw new IllegalStateException(PRODUCT_NOT_FOUND.getMessage());
+            throw new IllegalArgumentException(PRODUCT_NOT_FOUND.getMessage());
         }
     }
 
-    private static void isValidStock(Integer stock, Product promotionalProduct, Product nomalProduct) {
+    public void isValidStock(Integer stock, Product promotionalProduct, Product nomalProduct) {
         int promotionStock = getProductStock(promotionalProduct);
         int normalStock = getProductStock(nomalProduct);
 
         if (promotionStock+normalStock < stock) {
-            throw new IllegalStateException(INVALID_INPUT_STOCK.getMessage());
+            throw new IllegalArgumentException(INVALID_INPUT_STOCK.getMessage());
         }
     }
 
