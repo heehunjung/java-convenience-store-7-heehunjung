@@ -40,6 +40,10 @@ public class Product {
         return promotion.getBuyStock();
     }
 
+    public int getGetStock() {
+        return promotion.getGetStock();
+    }
+
     public int getTotalBuyStock(int stock) {
         return promotion.getTotalBuyStock(stock);
     }

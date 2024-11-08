@@ -18,6 +18,10 @@ public class Promotion {
         return buyGet.getBuyStock();
     }
 
+    public int getGetStock() {
+        return buyGet.getGetStock();
+    }
+
     public boolean checkDate(LocalDateTime now) {
         LocalDate date = now.toLocalDate();
 
