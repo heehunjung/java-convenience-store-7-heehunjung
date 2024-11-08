@@ -64,6 +64,8 @@
   - [x] `isValidStock` : 구매 가능한 수량인지 체크
   - [x] `isProductExists` : 상품이 존재하는 지 체크 
   - [x] `getProductStock` : 상품 별 수량을 가져오는 메서드 (private)
+  - [ ] `canApplyPromotion` : 프로모션 상품이 존재하는 경우 프로모션 적용 가능한지 체크
+  - [ ] `buyPromoItemNoDiscount` : 프로모션 상품을 프로모션 없이 구매
   - [ ] `checkStock` : 재고 체크
   - [ ] `productAndStockValidator` : List<Product> 돌면서 검증 : 프러덕트 클래스 내부 메서드
 #### getter 는 생략
@@ -71,3 +73,5 @@
 - [ ] `InputView`
 - [ ] `OutputView`
 - - -
+
+- [] 모두 구현 후 도메인, 컨트롤러 분리할 수 있으면 분리
