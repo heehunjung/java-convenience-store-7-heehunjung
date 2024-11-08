@@ -17,12 +17,12 @@ public class StoreTest {
     void find_기능_테스트() {
         Store store = createStoreWithTestProductsAndPromotions();
 
-        Product product1 = store.findProduct("치킨");
-        Product promotionProduct1 = store.findPromotionProduct("치킨");
+        Item item1 = store.findProduct("치킨");
+        Item promotionItem1 = store.findPromotionProduct("치킨");
 
-        Assertions.assertThat(product1.getName()).isEqualTo("치킨");
-        Assertions.assertThat(promotionProduct1.getName()).isEqualTo("치킨");
-        Assertions.assertThat(promotionProduct1.getPromotion().getName()).isEqualTo("3+1");
+        Assertions.assertThat(item1.getName()).isEqualTo("치킨");
+        Assertions.assertThat(promotionItem1.getName()).isEqualTo("치킨");
+        Assertions.assertThat(promotionItem1.getPromotion().getName()).isEqualTo("3+1");
     }
 
     @DisplayName("isValidStock_테스트_01")
@@ -30,10 +30,10 @@ public class StoreTest {
     void isValidStock_기능_테스트() {
         Store store = createStoreWithTestProductsAndPromotions();
 
-        Product product1 = store.findProduct("치킨");
-        Product promotionProduct1 = store.findPromotionProduct("치킨");
+        Item item1 = store.findProduct("치킨");
+        Item promotionItem1 = store.findPromotionProduct("치킨");
 
-        Assertions.assertThatThrownBy(() -> store.isValidStock(16,product1,promotionProduct1))
+        Assertions.assertThatThrownBy(() -> store.isValidStock(16, item1, promotionItem1))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -42,15 +42,15 @@ public class StoreTest {
     void isProductExists_기능_테스트() {
         Store store = createStoreWithTestProductsAndPromotions();
 
-        Product product1 = store.findProduct("치킨");
-        Product promotionProduct1 = store.findPromotionProduct("치킨");
+        Item item1 = store.findProduct("치킨");
+        Item promotionItem1 = store.findPromotionProduct("치킨");
 
         Assertions.assertThatThrownBy(() -> store.isProductExists(null,null))
                 .isInstanceOf(IllegalArgumentException.class);
         Assertions.assertThatNoException()
-                .isThrownBy(() -> store.isProductExists(product1,null));
+                .isThrownBy(() -> store.isProductExists(item1,null));
         Assertions.assertThatNoException()
-                .isThrownBy(() -> store.isProductExists(product1,promotionProduct1));
+                .isThrownBy(() -> store.isProductExists(item1, promotionItem1));
     }
 
     @DisplayName("checkPromotion_테스트_01")
@@ -58,15 +58,15 @@ public class StoreTest {
     void checkPromotion_기능_테스트() {
         Store store = createStoreWithTestProductsAndPromotions();
 
-        Product product1 = store.findProduct("치킨");
-        Product promotionProduct1 = store.findPromotionProduct("치킨");
+        Item item1 = store.findProduct("치킨");
+        Item promotionItem1 = store.findPromotionProduct("치킨");
 
         Assertions.assertThatThrownBy(() -> store.isProductExists(null,null))
                 .isInstanceOf(IllegalArgumentException.class);
         Assertions.assertThatNoException()
-                .isThrownBy(() -> store.isProductExists(product1,null));
+                .isThrownBy(() -> store.isProductExists(item1,null));
         Assertions.assertThatNoException()
-                .isThrownBy(() -> store.isProductExists(product1,promotionProduct1));
+                .isThrownBy(() -> store.isProductExists(item1, promotionItem1));
     }
 
     @DisplayName("buyPromoItemNoDiscount_테스트_01")
@@ -74,12 +74,12 @@ public class StoreTest {
     void buyPromoItemNoDiscount_기능_테스트() {
         Store store = createStoreWithTestProductsAndPromotions();
 
-        Product product1 = store.findProduct("치킨");
-        Product promotionProduct1 = store.findPromotionProduct("치킨");
-        List<Product> products = new ArrayList<>();
-        Assertions.assertThat(store.buyPromoItemNoDiscount(3,promotionProduct1,products))
+        Item item1 = store.findProduct("치킨");
+        Item promotionItem1 = store.findPromotionProduct("치킨");
+        List<Item> items = new ArrayList<>();
+        Assertions.assertThat(store.buyPromoItemNoDiscount(3, promotionItem1, items))
                 .isEqualTo(3);
-        Assertions.assertThat(store.buyPromoItemNoDiscount(5,promotionProduct1,products))
+        Assertions.assertThat(store.buyPromoItemNoDiscount(5, promotionItem1, items))
                 .isEqualTo(null);
     }
 
@@ -90,14 +90,14 @@ public class StoreTest {
         Promotion threePlusOne = new Promotion("3+1", new BuyGet(3, 1), new Range(startTime, endTime));
         Promotion twoPlusOne = new Promotion("2+1", new BuyGet(2, 1), new Range(startTime, endTime));
 
-        Product product1 = new Product("치킨", 5000, 5, threePlusOne);
-        Product product2 = new Product("치킨", 1000, 10, null);
-        Product product3 = new Product("콜라", 2000, 15, twoPlusOne);
-        Product product4 = new Product("사이다", 3000, 20, null);
+        Item item1 = new Item("치킨", 5000, 5, threePlusOne);
+        Item item2 = new Item("치킨", 1000, 10, null);
+        Item item3 = new Item("콜라", 2000, 15, twoPlusOne);
+        Item item4 = new Item("사이다", 3000, 20, null);
 
-        List<Product> products = List.of(product1, product2, product3, product4);
+        List<Item> items = List.of(item1, item2, item3, item4);
         List<Promotion> promotions = List.of(threePlusOne, twoPlusOne);
 
-        return new Store(products, promotions);
+        return new Store(items, promotions);
     }
 }

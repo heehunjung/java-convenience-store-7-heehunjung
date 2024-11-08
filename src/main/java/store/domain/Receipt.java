@@ -3,14 +3,14 @@ package store.domain;
 import java.util.List;
 
 public class Receipt {
-    private final List<Product> products;
+    private final List<Item> items;
     private int totalPrice;
     private int membershipPrice;
     private int promotionPrice;
     private final boolean isCanUseMemberShip;
 
-    public Receipt(List<Product> products, boolean isCanUseMemberShip) {
-        this.products = products;
+    public Receipt(List<Item> items, boolean isCanUseMemberShip) {
+        this.items = items;
         this.isCanUseMemberShip = isCanUseMemberShip;
     }
 
@@ -19,11 +19,11 @@ public class Receipt {
     }
 
     public void calculatePrice() {
-        for (Product product : products) {
-            totalPrice += product.calculatePrice();
+        for (Item item : items) {
+            totalPrice += item.calculatePrice();
 
-            if (product.getFree()) {
-                promotionPrice += product.calculatePrice();
+            if (item.getFree()) {
+                promotionPrice += item.calculatePrice();
             }
         }
     }
@@ -36,8 +36,8 @@ public class Receipt {
         return membershipPrice;
     }
 
-    public List<Product> getProducts() {
-        return products;
+    public List<Item> getProducts() {
+        return items;
     }
 
     public int getPromotionPrice() {

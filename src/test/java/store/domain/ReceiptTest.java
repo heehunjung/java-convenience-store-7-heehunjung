@@ -11,9 +11,9 @@ public class ReceiptTest {
     @DisplayName("canUseMembership_테스트_01")
     @Test
     void canUseMembership_기능_테스트() {
-        List<Product> products = getProducts();
+        List<Item> items = getProducts();
 
-        Receipt receipt = new Receipt(products,true);
+        Receipt receipt = new Receipt(items,true);
 
         Assertions.assertThat(receipt.canUseMemberShip())
                 .isTrue();
@@ -22,9 +22,9 @@ public class ReceiptTest {
     @DisplayName("금액_계산_테스트_01")
     @Test
     void calculatePrice_기능_테스트() {
-        List<Product> products = getProducts();
+        List<Item> items = getProducts();
 
-        Receipt receipt = new Receipt(products,true);
+        Receipt receipt = new Receipt(items,true);
         receipt.calculatePrice();
 
         Assertions.assertThat(receipt.getTotalPrice())
@@ -36,9 +36,9 @@ public class ReceiptTest {
     @DisplayName("멤버쉽_적용_테스트_01")
     @Test
     void applyMembership_기능_테스트() {
-        List<Product> products = getProducts();
+        List<Item> items = getProducts();
 
-        Receipt receipt = new Receipt(products,true);
+        Receipt receipt = new Receipt(items,true);
         receipt.calculatePrice();
         receipt.applyMembership();
 
@@ -46,18 +46,18 @@ public class ReceiptTest {
                 .isEqualTo(8000);
     }
 
-    private List<Product> getProducts() {
+    private List<Item> getProducts() {
         Promotion promotion = new Promotion("test", null, null);
 
-        Product product1 = new Product("치킨", 5000, 10, promotion);
-        Product product2 = new Product("치킨", 1000, 10, null);
-        Product product3 = new Product("콜라", 2000, 15, promotion);
-        Product product4 = new Product("사이다", 3000, 20, null);
+        Item item1 = new Item("치킨", 5000, 10, promotion);
+        Item item2 = new Item("치킨", 1000, 10, null);
+        Item item3 = new Item("콜라", 2000, 15, promotion);
+        Item item4 = new Item("사이다", 3000, 20, null);
 
-        Product purchased1 = new Product(product1, 5, Boolean.TRUE);
-        Product purchased2 = new Product(product2, 6, Boolean.FALSE);
-        Product purchased3 = new Product(product3, 7, Boolean.FALSE);
-        Product purchased4 = new Product(product4, 8, Boolean.FALSE);
+        Item purchased1 = new Item(item1, 5, Boolean.TRUE);
+        Item purchased2 = new Item(item2, 6, Boolean.FALSE);
+        Item purchased3 = new Item(item3, 7, Boolean.FALSE);
+        Item purchased4 = new Item(item4, 8, Boolean.FALSE);
 
         return List.of(purchased1, purchased2, purchased3, purchased4);
     }

@@ -1,11 +1,10 @@
 package store.domain;
 
-import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class ProductTest {
+public class ItemTest {
 
     @DisplayName("updateStock_테스트_01")
     @Test
@@ -14,10 +13,10 @@ public class ProductTest {
         int price = 1000;
         int stock = 10;
 
-        Product product = new Product(name, price, stock, null);
-        product.updateStock(10);
+        Item item = new Item(name, price, stock, null);
+        item.updateStock(10);
 
-        Assertions.assertThat(product.getStock())
+        Assertions.assertThat(item.getStock())
                 .isEqualTo(0);
     }
 
@@ -31,11 +30,11 @@ public class ProductTest {
         int price = 1000;
         int stock = 10;
 
-        Product product = new Product(name, price, stock, null);
+        Item item = new Item(name, price, stock, null);
 
-        Assertions.assertThatThrownBy(() -> product.isStockAvailable(inValidInput))
+        Assertions.assertThatThrownBy(() -> item.isStockAvailable(inValidInput))
                 .isInstanceOf(IllegalArgumentException.class);
         Assertions.assertThatNoException()
-                .isThrownBy(() ->  product.isStockAvailable(validInput));
+                .isThrownBy(() ->  item.isStockAvailable(validInput));
     }
 }

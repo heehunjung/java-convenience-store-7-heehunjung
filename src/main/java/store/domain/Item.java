@@ -7,7 +7,7 @@ import static store.global.ErrorMessages.INVALID_PRODUCT_STOCK;
 import java.time.LocalDateTime;
 import store.domain.promotion.Promotion;
 
-public class Product {
+public class Item {
 
     private final String name;
     private final Boolean isFree;
@@ -15,7 +15,7 @@ public class Product {
     private final int price;
     private int stock;
 
-    public Product(String name, int price, int stock, Promotion promotion) {
+    public Item(String name, int price, int stock, Promotion promotion) {
         priceValidator(price);
         stockValidator(stock);
 
@@ -26,12 +26,12 @@ public class Product {
         this.isFree = null;
     }
 
-    public Product(Product product, int stock, Boolean isFree) {
+    public Item(Item item, int stock, Boolean isFree) {
         stockValidator(stock);
 
-        this.name = product.getName();
-        this.price = product.getPrice();
-        this.promotion = product.getPromotion();
+        this.name = item.getName();
+        this.price = item.getPrice();
+        this.promotion = item.getPromotion();
         this.stock = stock;
         this.isFree = isFree;
     }

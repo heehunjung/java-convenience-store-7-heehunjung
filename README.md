@@ -38,7 +38,7 @@
 - [x] `Parser`
   - [x] `productAndStockParser` : 상품명, 수량을 파싱
 ## Domain
-- [x] `Product` 
+- [x] `Item` 
   - [x] `updateStock` : 수량을 업데이트
   - [x] `iStockAvailable` : 물량을 체크
   - [x] `stockValidator` : 생성 시 수량 검증
@@ -53,12 +53,12 @@
   - [x] `getBuyCount`: `BuyGet` 클래스의 `calculateBuyStock` 를 호출 
   - [x] `calculateFreeStock` : 구매한 수량에 따라 받게되는 promotion 상품 수량을 계산
 - [x] `Receipt` 
-  - [x] `List<Product> products`
+  - [x] `List<Product> items`
   - [x] `canUseMembership` : 멤버쉽 사용 가능한지 점검
   - [x] `calculatePrice` : 토탈 가격,프로모션 할인 가격을 계산
   - [x] `applyMembership` : 멤버쉽을 적용
 - [x] `Store`
-  - [x] `List <product>`,` List <promotion>`
+  - [x] `List <item>`,` List <promotion>`
   - [x] `findProduct` : 편의점 내 상품을 반환한다.
   - [x] `findPromotionProduct` : 편의점 내 프로모션 상품을 반환한다.
   - [x] `isValidStock` : 구매 가능한 수량인지 체크
