@@ -11,17 +11,25 @@ public class BuyGet {
 
     public int calculateBuyStock(int totalStock) {
         int setCount = getStock + buyStock;
-        int getCount = totalStock/setCount;
+        int getCount = totalStock / setCount;
 
-        return getCount* buyStock;
+        return getCount * buyStock;
     }
 
     public int calculateGetStock(int buyStock) {
-       int count = buyStock/this.buyStock;
-       return count * this.getStock;
+        int count = buyStock / this.buyStock;
+        return count * this.getStock;
     }
 
     public boolean isPromotionAvailable(int input) {
         return input <= buyStock;
+    }
+
+    public int getBuyStock() {
+        return buyStock;
+    }
+
+    public int getGetStock() {
+        return getStock;
     }
 }
