@@ -2,7 +2,6 @@ package store.domain.promotion;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import store.domain.Stock;
 
 public class Promotion {
     private final String name;
