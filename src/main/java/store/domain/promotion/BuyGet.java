@@ -1,5 +1,7 @@
 package store.domain.promotion;
 
+import store.domain.Stock;
+
 public class BuyGet {
     private final int getStock;
     private final int buyStock;

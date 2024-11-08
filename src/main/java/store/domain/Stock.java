@@ -13,10 +13,19 @@ public class Stock {
         return stock;
     }
 
-    public void update(int stock) {
+    public boolean compare(int stock) {
+        return this.stock >= stock;
+    }
+
+    public void minus(int stock) {
         updateValidate(stock);
         this.stock -= stock;
     }
+
+    public void plus(int stock) {
+        this.stock += stock;
+    }
+
     private void validate(int stock) {
         if (stock < 0) {
             //TODO : 에러 메세지 , 끝나는 에러인지 처리할 에러인지 고민해보기
@@ -30,7 +39,5 @@ public class Stock {
             throw new IllegalStateException("stock should be less than the current stock");
         }
     }
-
-
 }
 

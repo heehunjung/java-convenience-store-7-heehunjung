@@ -33,7 +33,7 @@ public class StoreTest {
         Item item1 = store.findProduct("치킨");
         Item promotionItem1 = store.findPromotionProduct("치킨");
 
-        Assertions.assertThatThrownBy(() -> store.isValidStock(16, item1, promotionItem1))
+        Assertions.assertThatThrownBy(() -> store.isValidStock(new Stock(16), item1, promotionItem1))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -77,10 +77,10 @@ public class StoreTest {
         Item item1 = store.findProduct("치킨");
         Item promotionItem1 = store.findPromotionProduct("치킨");
         List<Item> items = new ArrayList<>();
-        Assertions.assertThat(store.buyPromoItemNoDiscount(3, promotionItem1, items))
-                .isEqualTo(3);
-        Assertions.assertThat(store.buyPromoItemNoDiscount(5, promotionItem1, items))
-                .isEqualTo(null);
+        Assertions.assertThat(store.buyPromoItemNoDiscount(new Stock(3), promotionItem1, items))
+                .isTrue();
+        Assertions.assertThat(store.buyPromoItemNoDiscount(new Stock(5), promotionItem1, items))
+                .isFalse();
     }
 
     private Store createStoreWithTestProductsAndPromotions() {
@@ -90,10 +90,10 @@ public class StoreTest {
         Promotion threePlusOne = new Promotion("3+1", new BuyGet(3, 1), new Range(startTime, endTime));
         Promotion twoPlusOne = new Promotion("2+1", new BuyGet(2, 1), new Range(startTime, endTime));
 
-        Item item1 = new Item("치킨", 5000, 5, threePlusOne);
-        Item item2 = new Item("치킨", 1000, 10, null);
-        Item item3 = new Item("콜라", 2000, 15, twoPlusOne);
-        Item item4 = new Item("사이다", 3000, 20, null);
+        Item item1 = new Item("치킨", 5000, new Stock(5), threePlusOne);
+        Item item2 = new Item("치킨", 1000, new Stock(10), null);
+        Item item3 = new Item("콜라", 2000, new Stock(15), twoPlusOne);
+        Item item4 = new Item("사이다", 3000, new Stock(20), null);
 
         List<Item> items = List.of(item1, item2, item3, item4);
         List<Promotion> promotions = List.of(threePlusOne, twoPlusOne);

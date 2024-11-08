@@ -13,7 +13,7 @@ public class ReceiptTest {
     void canUseMembership_기능_테스트() {
         List<Item> items = getProducts();
 
-        Receipt receipt = new Receipt(items,true);
+        Receipt receipt = new Receipt(items, true);
 
         Assertions.assertThat(receipt.canUseMemberShip())
                 .isTrue();
@@ -24,7 +24,7 @@ public class ReceiptTest {
     void calculatePrice_기능_테스트() {
         List<Item> items = getProducts();
 
-        Receipt receipt = new Receipt(items,true);
+        Receipt receipt = new Receipt(items, true);
         receipt.calculatePrice();
 
         Assertions.assertThat(receipt.getTotalPrice())
@@ -38,7 +38,7 @@ public class ReceiptTest {
     void applyMembership_기능_테스트() {
         List<Item> items = getProducts();
 
-        Receipt receipt = new Receipt(items,true);
+        Receipt receipt = new Receipt(items, true);
         receipt.calculatePrice();
         receipt.applyMembership();
 
@@ -49,15 +49,15 @@ public class ReceiptTest {
     private List<Item> getProducts() {
         Promotion promotion = new Promotion("test", null, null);
 
-        Item item1 = new Item("치킨", 5000, 10, promotion);
-        Item item2 = new Item("치킨", 1000, 10, null);
-        Item item3 = new Item("콜라", 2000, 15, promotion);
-        Item item4 = new Item("사이다", 3000, 20, null);
+        Item item1 = new Item("치킨", 5000, new Stock(10), promotion);
+        Item item2 = new Item("치킨", 1000, new Stock(10), null);
+        Item item3 = new Item("콜라", 2000, new Stock(15), promotion);
+        Item item4 = new Item("사이다", 3000, new Stock(20), null);
 
-        Item purchased1 = new Item(item1, 5, Boolean.TRUE);
-        Item purchased2 = new Item(item2, 6, Boolean.FALSE);
-        Item purchased3 = new Item(item3, 7, Boolean.FALSE);
-        Item purchased4 = new Item(item4, 8, Boolean.FALSE);
+        Item purchased1 = new Item(item1, new Stock(5), Boolean.TRUE);
+        Item purchased2 = new Item(item2, new Stock(6), Boolean.FALSE);
+        Item purchased3 = new Item(item3, new Stock(7), Boolean.FALSE);
+        Item purchased4 = new Item(item4, new Stock(8), Boolean.FALSE);
 
         return List.of(purchased1, purchased2, purchased3, purchased4);
     }

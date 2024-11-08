@@ -12,127 +12,126 @@ import java.util.Map;
 import store.domain.promotion.Promotion;
 
 public class Store {
+    //TODO : Product -> Item
 
     // 필드 변수
-    private final List<Product> products;
+    private final List<Item> items;
     private final List<Promotion> promotions;
 
     // 생성자
-    public Store(List<Product> products, List<Promotion> promotions) {
-        this.products = products;
+    public Store(List<Item> items, List<Promotion> promotions) {
+        this.items = items;
         this.promotions = promotions;
     }
 
     // 공용 메서드
-    public void run(Map<String, Integer> shoppingCarts) {
+    public void run(Map<String, Stock> shoppingCarts) {
         shoppingCarts.forEach((product, stock) -> {
-            Product nomalProduct = findProduct(product);
-            Product promotionalProduct = findPromotionProduct(product);
+            Item nomalItem = findProduct(product);
+            Item promotionalItem = findPromotionProduct(product);
 
             // 상품 존재 여부 확인
-            isProductExists(nomalProduct, promotionalProduct);
+            isProductExists(nomalItem, promotionalItem);
 
             // 유효한 수량 확인
-            isValidStock(stock, promotionalProduct, nomalProduct);
+            isValidStock(stock, promotionalItem, nomalItem);
 
-            List<Product> purchasedProducts = new ArrayList<Product>();
+            List<Item> purchasedItems = new ArrayList<Item>();
 
             // 프로모션 제품 처리
-            int promotionalProductNumber = processPromotionalProducts(stock, promotionalProduct, purchasedProducts);
-
-            int remainStock = stock - promotionalProductNumber;
+            processPromotionalProducts(stock, promotionalItem, purchasedItems);
 
             // 일반 제품 처리
-            processNormalProducts(remainStock, nomalProduct, purchasedProducts);
+            processNormalProducts(stock, nomalItem, purchasedItems);
         });
     }
 
-    public int processPromotionalProducts(int stock, Product promotionalProduct, List<Product> purchasedProducts) {
-        int purchasePromotionalProductNumber = 0;
-        int freeProductNumber = 0;
-        int noPromotionalProductNumber = 0;
-        int notFreePromotionalProductNumber = 0;
+    //TODO : INDENT + 10즐
+    public void processPromotionalProducts(Stock stock, Item promotionalItem, List<Item> purchasedItems) {
+        Stock stockFreeItem = new Stock(0);
+        Stock stockForPay = new Stock(0);
 
-        if (promotionalProduct != null) {
-            if (promotionalProduct.checkDate(DateTimes.now())) {
-                Integer purchasedStock = buyPromoItemNoDiscount(stock, promotionalProduct, purchasedProducts);
-                if (purchasedStock != null) {
-                    promotionalProduct.updateStock(purchasedStock);
-                    return purchasedStock;
-                }
-
-                purchasePromotionalProductNumber = promotionalProduct.getTotalBuyStock(stock);
-                freeProductNumber = promotionalProduct.calculateFreeStock(purchasePromotionalProductNumber);
-
-                int promotionalNumber = purchasePromotionalProductNumber + freeProductNumber;
-
-                promotionalProduct.updateStock(promotionalNumber);
-
-                if (promotionalProduct.getStock() > 0) {
-                    noPromotionalProductNumber = promotionalProduct.getStock();
-                }
-
-                notFreePromotionalProductNumber = noPromotionalProductNumber + purchasePromotionalProductNumber;
-
-                promotionalProduct.updateStock(noPromotionalProductNumber);
-
-                addPurchaseProduct(notFreePromotionalProductNumber, promotionalProduct, purchasedProducts, FALSE);
-                addPurchaseProduct(freeProductNumber, promotionalProduct, purchasedProducts, TRUE);
+        if (promotionalItem == null) {
+            return;
+        }
+        if (promotionalItem.checkDate(DateTimes.now())) {
+            if (buyPromoItemNoDiscount(stock, promotionalItem, purchasedItems)) {
+                return;
             }
-        }
-        return notFreePromotionalProductNumber + freeProductNumber;
-    }
 
-    public void processNormalProducts(int remainStock, Product nomalProduct, List<Product> purchasedProducts) {
-        if (remainStock > 0) {
-            nomalProduct.updateStock(remainStock);
-            addPurchaseProduct(remainStock, nomalProduct, purchasedProducts, FALSE);
+            promotionProcess(stock, promotionalItem, stockFreeItem, stockForPay);
+
+            addPurchaseProduct(stockForPay, promotionalItem, purchasedItems, FALSE);
+            addPurchaseProduct(stockFreeItem, promotionalItem, purchasedItems, TRUE);
         }
     }
 
-    public Integer buyPromoItemNoDiscount(int stock, Product promotionalProduct, List<Product> purchasedProducts) {
-        if (canApplyPromotion(stock, promotionalProduct)) {
-            addPurchaseProduct(stock, promotionalProduct, purchasedProducts, FALSE);
-            return stock;
-        }
-        return null;
+    private static void promotionProcess(Stock stock, Item promotionalItem, Stock stockFreeItem, Stock stockForPay) {
+        int stockForPromotionItem = promotionalItem.getTotalBuyStock(stock.getStock());
+        int remainingStock = processRemainingPromotionStock(promotionalItem);
+
+        stockFreeItem.plus(promotionalItem.calculateFreeStock(stockForPromotionItem));
+        stockForPay.plus(remainingStock + stockForPromotionItem);
+        int total = stockForPay.getStock() + stockFreeItem.getStock();
+        promotionalItem.updateStock(total);
+        stock.minus(total);
     }
 
-    public void isProductExists(Product nomalProduct, Product promotionalProduct) {
-        if (nomalProduct == null && promotionalProduct == null) {
+    public void processNormalProducts(Stock remainStock, Item nomalItem, List<Item> purchasedItems) {
+        if (remainStock.getStock() > 0) {
+            nomalItem.updateStock(remainStock.getStock());
+            addPurchaseProduct(remainStock, nomalItem, purchasedItems, FALSE);
+        }
+    }
+
+    public boolean buyPromoItemNoDiscount(Stock stock, Item promotionalItem, List<Item> purchasedItems) {
+        int count = stock.getStock();
+
+        if (canApplyPromotion(count, promotionalItem)) {
+            addPurchaseProduct(stock, promotionalItem, purchasedItems, FALSE);
+            promotionalItem.updateStock(count);
+            stock.minus(count);
+
+            return true;
+        }
+        return false;
+    }
+
+    public void isProductExists(Item nomalItem, Item promotionalItem) {
+        if (nomalItem == null && promotionalItem == null) {
             throw new IllegalArgumentException(PRODUCT_NOT_FOUND.getMessage());
         }
     }
 
-    public void isValidStock(Integer stock, Product promotionalProduct, Product nomalProduct) {
-        int promotionStock = getProductStock(promotionalProduct);
-        int normalStock = getProductStock(nomalProduct);
+    public void isValidStock(Stock stock, Item promotionalItem, Item nomalItem) {
+        Stock promotionStock = getProductStock(promotionalItem);
+        Stock normalStock = getProductStock(nomalItem);
 
-        if (promotionStock + normalStock < stock) {
+        if (promotionStock.getStock() + normalStock.getStock() < stock.getStock()) {
             throw new IllegalArgumentException(INVALID_INPUT_STOCK.getMessage());
         }
     }
 
-    public Product findProduct(String input) {
-        for (Product product : products) {
-            if (product.getName().equals(input) && product.getPromotion() == null) {
-                return product;
+    public Item findProduct(String input) {
+        for (Item item : items) {
+            if (item.getName().equals(input) && item.getPromotion() == null) {
+                return item;
             }
         }
         return null;
     }
 
-    public Product findPromotionProduct(String input) {
-        for (Product product : products) {
-            if (product.getName().equals(input) && product.getPromotion() != null) {
-                return product;
+    public Item findPromotionProduct(String input) {
+        for (Item item : items) {
+            if (item.getName().equals(input) && item.getPromotion() != null) {
+                return item;
             }
         }
         return null;
     }
 
-    public List<Product> getProducts() {
-        return products;
+    public List<Item> getProducts() {
+        return items;
     }
 
     public List<Promotion> getPromotions() {
@@ -140,20 +139,24 @@ public class Store {
     }
 
     // private 메서드
-
-    private void addPurchaseProduct(int remainStock, Product nomalProduct, List<Product> purchasedProducts, Boolean isFree) {
-        Product purchasedProduct = new Product(nomalProduct, remainStock, FALSE);
-        purchasedProducts.add(purchasedProduct);
+    private static int processRemainingPromotionStock(Item promotionalItem) {
+        return Math.max(promotionalItem.getStock()
+                .getStock(), 0);
     }
 
-    private boolean canApplyPromotion(int stock, Product promotionalProduct) {
-        return promotionalProduct.getBuyStock() + promotionalProduct.getGetStock() >= stock;
+    private void addPurchaseProduct(Stock stock, Item nomalItem, List<Item> purchasedItems, Boolean isFree) {
+        Item purchasedItem = new Item(nomalItem, stock, isFree);
+        purchasedItems.add(purchasedItem);
     }
 
-    private static int getProductStock(Product product) {
-        int promotionStock = 0;
-        if (product != null) {
-            promotionStock = product.getStock();
+    private boolean canApplyPromotion(int stock, Item promotionalItem) {
+        return promotionalItem.getBuyStock() + promotionalItem.getGetStock() >= stock;
+    }
+
+    private static Stock getProductStock(Item item) {
+        Stock promotionStock = null;
+        if (item != null) {
+            promotionStock = item.getStock();
         }
         return promotionStock;
     }

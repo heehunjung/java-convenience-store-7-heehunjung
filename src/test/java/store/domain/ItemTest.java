@@ -11,12 +11,12 @@ public class ItemTest {
     void updateStock_기능_테스트() {
         String name = "치킨";
         int price = 1000;
-        int stock = 10;
+        Stock stock = new Stock(10);
 
         Item item = new Item(name, price, stock, null);
         item.updateStock(10);
 
-        Assertions.assertThat(item.getStock())
+        Assertions.assertThat(item.getStockCount())
                 .isEqualTo(0);
     }
 
@@ -28,7 +28,7 @@ public class ItemTest {
 
         String name = "치킨";
         int price = 1000;
-        int stock = 10;
+        Stock stock = new Stock(10);
 
         Item item = new Item(name, price, stock, null);
 
