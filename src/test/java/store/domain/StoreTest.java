@@ -1,6 +1,7 @@
 package store.domain;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -50,6 +51,36 @@ public class StoreTest {
                 .isThrownBy(() -> store.isProductExists(product1,null));
         Assertions.assertThatNoException()
                 .isThrownBy(() -> store.isProductExists(product1,promotionProduct1));
+    }
+
+    @DisplayName("checkPromotion_테스트_01")
+    @Test
+    void checkPromotion_기능_테스트() {
+        Store store = createStoreWithTestProductsAndPromotions();
+
+        Product product1 = store.findProduct("치킨");
+        Product promotionProduct1 = store.findPromotionProduct("치킨");
+
+        Assertions.assertThatThrownBy(() -> store.isProductExists(null,null))
+                .isInstanceOf(IllegalArgumentException.class);
+        Assertions.assertThatNoException()
+                .isThrownBy(() -> store.isProductExists(product1,null));
+        Assertions.assertThatNoException()
+                .isThrownBy(() -> store.isProductExists(product1,promotionProduct1));
+    }
+
+    @DisplayName("buyPromoItemNoDiscount_테스트_01")
+    @Test
+    void buyPromoItemNoDiscount_기능_테스트() {
+        Store store = createStoreWithTestProductsAndPromotions();
+
+        Product product1 = store.findProduct("치킨");
+        Product promotionProduct1 = store.findPromotionProduct("치킨");
+        List<Product> products = new ArrayList<>();
+        Assertions.assertThat(store.buyPromoItemNoDiscount(3,promotionProduct1,products))
+                .isEqualTo(3);
+        Assertions.assertThat(store.buyPromoItemNoDiscount(5,promotionProduct1,products))
+                .isEqualTo(null);
     }
 
     private Store createStoreWithTestProductsAndPromotions() {
