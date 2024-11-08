@@ -38,6 +38,7 @@
 - [x] `Parser`
   - [x] `productAndStockParser` : 상품명, 수량을 파싱
 ## Domain
+- [x] `Stock` : `Item` 의 수량 정보를 다루는 클래스
 - [x] `Item` 
   - [x] `updateStock` : 수량을 업데이트
   - [x] `iStockAvailable` : 물량을 체크
@@ -69,6 +70,12 @@
   - [ ] `checkStock` : 재고 체크
   - [ ] `productAndStockValidator` : List<Product> 돌면서 검증 : 프러덕트 클래스 내부 메서드
 #### getter 는 생략
+## Controller
+- [x] `ItemController`
+  - [x] `processProducts` : 일반 상품 구매 프로세스
+- [x] `PromotionController`
+  - [x] `processPromotionItem` : 프로모션 상품 구매 프로세스
+- [ ] `FrontController`
 ## View
 - [ ] `InputView`
 - [ ] `OutputView`
