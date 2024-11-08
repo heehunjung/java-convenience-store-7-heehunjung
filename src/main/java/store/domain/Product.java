@@ -26,7 +26,7 @@ public class Product {
         this.isFree = null;
     }
 
-    public Product(Product product, int stock ,Boolean isFree) {
+    public Product(Product product, int stock, Boolean isFree) {
         stockValidator(stock);
 
         this.name = product.getName();
@@ -34,6 +34,10 @@ public class Product {
         this.promotion = product.getPromotion();
         this.stock = stock;
         this.isFree = isFree;
+    }
+
+    public int getBuyStock() {
+        return promotion.getBuyStock();
     }
 
     public int getTotalBuyStock(int stock) {
