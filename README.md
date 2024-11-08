@@ -61,8 +61,8 @@
   - [x] `List <product>`,` List <promotion>`
   - [x] `findProduct` : 편의점 내 상품을 반환한다.
   - [x] `findPromotionProduct` : 편의점 내 프로모션 상품을 반환한다.
-  - [x] `isValidStock` : 구매 가능한 수량인지 체크 (private)
-  - [x] `isProductExists` : 상품이 존재하는 지 체크 (private)
+  - [x] `isValidStock` : 구매 가능한 수량인지 체크
+  - [x] `isProductExists` : 상품이 존재하는 지 체크 
   - [x] `getProductStock` : 상품 별 수량을 가져오는 메서드 (private)
   - [ ] `checkStock` : 재고 체크
   - [ ] `productAndStockValidator` : List<Product> 돌면서 검증 : 프러덕트 클래스 내부 메서드

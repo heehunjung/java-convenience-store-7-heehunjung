@@ -13,7 +13,7 @@ public class StoreTest {
 
     @DisplayName("find_메서드_테스트_01")
     @Test
-    void find_메서드_기능_테스트() {
+    void find_기능_테스트() {
         Store store = createStoreWithTestProductsAndPromotions();
 
         Product product1 = store.findProduct("치킨");
@@ -22,6 +22,34 @@ public class StoreTest {
         Assertions.assertThat(product1.getName()).isEqualTo("치킨");
         Assertions.assertThat(promotionProduct1.getName()).isEqualTo("치킨");
         Assertions.assertThat(promotionProduct1.getPromotion().getName()).isEqualTo("3+1");
+    }
+
+    @DisplayName("isValidStock_테스트_01")
+    @Test
+    void isValidStock_기능_테스트() {
+        Store store = createStoreWithTestProductsAndPromotions();
+
+        Product product1 = store.findProduct("치킨");
+        Product promotionProduct1 = store.findPromotionProduct("치킨");
+
+        Assertions.assertThatThrownBy(() -> store.isValidStock(16,product1,promotionProduct1))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @DisplayName("isValidStock_테스트_01")
+    @Test
+    void isProductExists_기능_테스트() {
+        Store store = createStoreWithTestProductsAndPromotions();
+
+        Product product1 = store.findProduct("치킨");
+        Product promotionProduct1 = store.findPromotionProduct("치킨");
+
+        Assertions.assertThatThrownBy(() -> store.isProductExists(null,null))
+                .isInstanceOf(IllegalArgumentException.class);
+        Assertions.assertThatNoException()
+                .isThrownBy(() -> store.isProductExists(product1,null));
+        Assertions.assertThatNoException()
+                .isThrownBy(() -> store.isProductExists(product1,promotionProduct1));
     }
 
     private Store createStoreWithTestProductsAndPromotions() {
