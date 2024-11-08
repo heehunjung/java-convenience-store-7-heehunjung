@@ -89,20 +89,21 @@ public class Store {
         }
     }
 
-    // TODO : 메서드 10줄 이상
     private static void isValidStock(Integer stock, Product promotionalProduct, Product nomalProduct) {
-        int promotionStock = 0 ;
-        int normalStock = 0 ;
-        if (promotionalProduct != null) {
-            promotionStock = promotionalProduct.getStock();
-        }
-        if (nomalProduct != null) {
-            normalStock = nomalProduct.getStock();
-        }
+        int promotionStock = getProductStock(promotionalProduct);
+        int normalStock = getProductStock(nomalProduct);
 
         if (promotionStock+normalStock < stock) {
             throw new IllegalStateException(INVALID_INPUT_STOCK.getMessage());
         }
+    }
+
+    private static int getProductStock(Product product) {
+        int promotionStock = 0 ;
+        if (product != null) {
+            promotionStock = product.getStock();
+        }
+        return promotionStock;
     }
 
     public Product findProduct(String input) {
