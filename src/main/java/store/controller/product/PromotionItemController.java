@@ -28,6 +28,7 @@ public class PromotionItemController {
         // TODO : 여기도 메서드 줄이기
         if (promotionalItem.checkDate(DateTimes.now())) {
             if (store.buyPromoItemNoDiscount(stock, promotionalItem, purchasedItems)) {
+                System.out.println("여기");
                 return;
             }
 
@@ -39,12 +40,18 @@ public class PromotionItemController {
 
     private static void promotionProcess(Stock stock, Item promotionalItem, Stock stockFreeItem, Stock stockForPay) {
         int stockForPromotionItem = promotionalItem.getTotalBuyStock(stock.getStock());
-        int remainingStock = processRemainingPromotionStock(promotionalItem);
+        int freeStock =  promotionalItem.calculateFreeStock(stockForPromotionItem);
 
         stockFreeItem.plus(promotionalItem.calculateFreeStock(stockForPromotionItem));
+        promotionalItem.updateStock(freeStock + stockForPromotionItem);
+
+        int remainingStock = processRemainingPromotionStock(promotionalItem);
+
         stockForPay.plus(remainingStock + stockForPromotionItem);
+        promotionalItem.updateStock(remainingStock);
+
         int total = stockForPay.getStock() + stockFreeItem.getStock();
-        promotionalItem.updateStock(total);
+
         stock.minus(total);
     }
 
