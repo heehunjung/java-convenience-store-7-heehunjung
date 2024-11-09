@@ -20,7 +20,6 @@ public class ItemControllerTest {
         ItemController itemController = new ItemController();
 
         itemController.processProducts(stock, item, items);
-
         Assertions.assertThat(items.size()).isEqualTo(1);
         Assertions.assertThat(items.getFirst().getName()).isEqualTo(item.getName());
 
