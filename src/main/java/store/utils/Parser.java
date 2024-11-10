@@ -1,35 +1,37 @@
 package store.utils;
 
-import static store.global.ErrorMessages.PARSING_FAIL_ERROR;
+import static store.global.ErrorMessages.INVALID_INPUT_STOCK_FORMAT;
 import static store.global.InputConstant.PRODUCT_STOCK_DELIMITER;
+import static store.utils.Validator.isPositiveValidator;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class Parser {
 
-    public static Map<String, Integer> productStockParser(String input) {
+    public static void itemAndStockParser(String input, Map<String, Integer> storeUserInput) {
         String trimmedInput = input.substring(1, input.length() - 1);
-        List<String> splitInput = List.of(trimmedInput.split(PRODUCT_STOCK_DELIMITER));
+        List<String> splitInput = splitWithDelimiter(trimmedInput);
 
-        Map<String, Integer> result = getStringIntegerMap(splitInput);
-
-        return result;
+        getStringIntegerMap(splitInput,storeUserInput);
     }
 
-    // TODO : 이거 지금 맵을 리턴하는데 맵을 받아서 추가하고 VOID 로 바꿔야할 듯 + 11줄
-    private static Map<String, Integer> getStringIntegerMap(List<String> splitInput) {
+    public static List<String> splitWithDelimiter(String input) {
+        return List.of(input.split(PRODUCT_STOCK_DELIMITER));
+    }
+
+    private static void getStringIntegerMap(List<String> splitInput, Map<String, Integer> storeUserInput) {
         String productName = splitInput.get(0);
         int stock;
+
         try {
             stock = Integer.parseInt(splitInput.get(1));
+            isPositiveValidator(stock);
         } catch (NumberFormatException e) {
-            throw new NumberFormatException(PARSING_FAIL_ERROR.getMessage());
+            throw new IllegalArgumentException(INVALID_INPUT_STOCK_FORMAT.getMessage());
         }
 
-        Map<String, Integer> result = new HashMap<>();
-        result.put(productName, stock);
-        return result;
+        storeUserInput.put(productName, stock);
     }
+
 }
