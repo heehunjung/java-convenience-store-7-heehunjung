@@ -67,4 +67,20 @@ public class ValidatorTest {
         Assertions.assertThatThrownBy(() -> Validator.duplicatedNameValidator(invalidInput))
                 .isInstanceOf(IllegalArgumentException.class);
     }
+
+    @DisplayName("isPositiveValidator_테스트_01")
+    @Test
+    void 음수또는_0이_입력되면_예외를_발생한다() {
+        int zero = 0;
+        int negative = -1;
+        int positive = 1;
+
+        Assertions.assertThatNoException()
+                .isThrownBy(() -> Validator.isPositiveValidator(positive));
+
+        Assertions.assertThatThrownBy(() -> Validator.isPositiveValidator(negative))
+                .isInstanceOf(IllegalArgumentException.class);
+        Assertions.assertThatThrownBy(() -> Validator.isPositiveValidator(zero))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
 }
