@@ -28,7 +28,6 @@ public class PromotionItemController {
         // TODO : 여기도 메서드 줄이기
         if (promotionalItem.checkDate(DateTimes.now())) {
             if (store.buyPromoItemNoDiscount(stock, promotionalItem, purchasedItems)) {
-                System.out.println("여기");
                 return;
             }
 
