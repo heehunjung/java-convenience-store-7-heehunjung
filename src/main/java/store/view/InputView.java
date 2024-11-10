@@ -2,6 +2,8 @@ package store.view;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class InputView {
@@ -9,7 +11,16 @@ public class InputView {
     private static final String MEMBERSHIP_MESSAGE = "멤버십 할인을 받으시겠습니까? (Y/N)";
     private static final String ENDING_MESSAGE = "감사합니다. 구매하고 싶은 다른 상품이 있나요? (Y/N)";
 
-    public static String getLines(BufferedReader br) throws IOException {
+    public static List<String> getLines(BufferedReader br) throws IOException {
+        List<String> lines = new ArrayList<>();
+        String line;
+        while ((line = getLine(br)) != null) {
+            lines.add(line);
+        }
+        return lines;
+    }
+
+    public static String getLine(BufferedReader br) throws IOException {
         return br.readLine();
     }
 
