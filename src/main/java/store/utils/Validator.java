@@ -1,5 +1,6 @@
 package store.utils;
 
+import static store.global.ErrorMessages.INVALID_INPUT_STOCK_NEGATIVE;
 import static store.global.ErrorMessages.INVALID_INPUT_YES_OR_NO;
 import static store.global.InputConstant.DELIMITER;
 import static store.global.InputConstant.NO_INPUT;
@@ -50,6 +51,12 @@ public class Validator {
     public static void nullOrEmptyValidator(String input) {
         if ( input == null || input.trim().isEmpty()) {
             throw new IllegalArgumentException(INVALID_INPUT_NULL_EMPTY.getMessage());
+        }
+    }
+
+    public static void isPositiveValidator(int input) {
+        if (input <= 0) {
+            throw new IllegalArgumentException(INVALID_INPUT_STOCK_NEGATIVE.getMessage());
         }
     }
 
