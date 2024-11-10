@@ -32,19 +32,12 @@ public class Promotion {
         return buyGet.calculateBuyStock(totalStock);
     }
 
-    public BuyGet getBuyGet() {
-        return buyGet;
-    }
-
     public String getName() {
         return name;
-    }
-
-    public Range getRange() {
-        return range;
     }
 
     public int calculateFreeStock(int stock) {
         return buyGet.calculateGetStock(stock);
     }
+
 }
