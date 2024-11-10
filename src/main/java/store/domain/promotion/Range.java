@@ -14,4 +14,5 @@ public class Range {
     public boolean isValidRange(LocalDate now) {
         return !now.isBefore(startTime) && !now.isAfter(endTime);
     }
+
 }

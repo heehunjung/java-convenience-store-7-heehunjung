@@ -10,7 +10,7 @@ import store.domain.promotion.Promotion;
 
 public class PromotionControllerTest {
 
-    @DisplayName("setPromotions")
+    @DisplayName("setPromotions_테스트_01")
     @Test
     void 기능_테스트() {
         String start = "name,buy,get,start_date,end_date";

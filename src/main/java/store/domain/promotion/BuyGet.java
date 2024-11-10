@@ -1,5 +1,7 @@
 package store.domain.promotion;
 
+import java.util.Objects;
+
 public class BuyGet {
     private final int getStock;
     private final int buyStock;
@@ -32,4 +34,5 @@ public class BuyGet {
     public int getGetStock() {
         return getStock;
     }
+
 }

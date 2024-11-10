@@ -40,4 +40,5 @@ public class Promotion {
         return buyGet.calculateGetStock(stock);
     }
 
+
 }
