@@ -16,13 +16,13 @@ import java.util.Set;
 
 public class Validator {
 
-    public static void purchaseInputFormatValidator(String input) {
+    public static void buyInputFormatValidator(String input) {
         nullOrEmptyValidator(input);
 
         List<String> splitInput = List.of(input.split(DELIMITER));
 
         for (String s : splitInput) {
-            productAndStockFormatValidator(s);
+            itemAndStockFormatValidator(s);
         }
     }
 
@@ -34,7 +34,7 @@ public class Validator {
         }
     }
 
-    public static void productAndStockFormatValidator(String input) {
+    public static void itemAndStockFormatValidator(String input) {
         if (!input.matches(PRODUCT_STOCK_PATTERN)) {
             throw new IllegalArgumentException(INVALID_INPUT_PATTERN.getMessage());
         }
@@ -49,7 +49,7 @@ public class Validator {
     }
 
     public static void nullOrEmptyValidator(String input) {
-        if ( input == null || input.trim().isEmpty()) {
+        if (input == null || input.trim().isEmpty()) {
             throw new IllegalArgumentException(INVALID_INPUT_NULL_EMPTY.getMessage());
         }
     }
