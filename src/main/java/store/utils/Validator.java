@@ -19,9 +19,9 @@ public class Validator {
     public static void purchaseInputFormatValidator(String input) {
         nullOrEmptyValidator(input);
 
-        List<String> splitedInput = List.of(input.split(DELIMITER));
+        List<String> splitInput = List.of(input.split(DELIMITER));
 
-        for (String s : splitedInput) {
+        for (String s : splitInput) {
             productAndStockFormatValidator(s);
         }
     }
