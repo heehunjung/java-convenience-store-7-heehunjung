@@ -37,6 +37,8 @@
   - [X] `YesOrNoValidator` : Y,N 제외 입력 예외처리
 - [x] `Parser`
   - [x] `productAndStockParser` : 상품명, 수량을 파싱
+- [x] `Converter`
+  - [x] `stringToDateTime` : 문자열을 `DateTime` 타입으로 변경
 ## Domain
 - [x] `Stock` : `Item` 의 수량 정보를 다루는 클래스
 - [x] `Item` 
