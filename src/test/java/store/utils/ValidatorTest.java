@@ -15,8 +15,8 @@ public class ValidatorTest {
         String invalidInput = "[sidar-2]";
 
         Assertions.assertThatNoException()
-                .isThrownBy(() -> Validator.purchaseInputFormatValidator(validInput));
-        Assertions.assertThatThrownBy(() -> Validator.productAndStockFormatValidator(invalidInput))
+                .isThrownBy(() -> Validator.buyInputFormatValidator(validInput));
+        Assertions.assertThatThrownBy(() -> Validator.itemAndStockFormatValidator(invalidInput))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -27,8 +27,8 @@ public class ValidatorTest {
         String invalidInput = " [사이다-2].[감자칩-1]";
 
         Assertions.assertThatNoException()
-                .isThrownBy(() -> Validator.purchaseInputFormatValidator(validInput));
-        Assertions.assertThatThrownBy(() -> Validator.purchaseInputFormatValidator(invalidInput))
+                .isThrownBy(() -> Validator.buyInputFormatValidator(validInput));
+        Assertions.assertThatThrownBy(() -> Validator.buyInputFormatValidator(invalidInput))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -59,8 +59,8 @@ public class ValidatorTest {
     @DisplayName("duplicatedNameValidator_테스트_01")
     @Test
     void 중복된_이름이_입력되면_예외를_발생한다() {
-        List<String> validInput = Arrays.asList("치킨","피자","콜라");
-        List<String> invalidInput = Arrays.asList("치킨","치킨","콜라");
+        List<String> validInput = Arrays.asList("치킨", "피자", "콜라");
+        List<String> invalidInput = Arrays.asList("치킨", "치킨", "콜라");
 
         Assertions.assertThatNoException()
                 .isThrownBy(() -> Validator.duplicatedNameValidator(validInput));
