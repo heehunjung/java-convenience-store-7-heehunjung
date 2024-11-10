@@ -65,20 +65,19 @@
   - [x] `isValidStock` : 구매 가능한 수량인지 체크
   - [x] `isProductExists` : 상품이 존재하는 지 체크 
   - [x] `getProductStock` : 상품 별 수량을 가져오는 메서드 (private)
-  - [ ] `canApplyPromotion` : 프로모션 상품이 존재하는 경우 프로모션 적용 가능한지 체크
-  - [ ] `buyPromoItemNoDiscount` : 프로모션 상품을 프로모션 없이 구매
-  - [ ] `checkStock` : 재고 체크
-  - [ ] `productAndStockValidator` : List<Product> 돌면서 검증 : 프러덕트 클래스 내부 메서드
+  - [x] `canApplyPromotion` : 프로모션 상품이 존재하는 경우 프로모션 적용 가능한지 체크
+  - [x] `buyPromoItemNoDiscount` : 프로모션 상품을 프로모션 없이 구매
 #### getter 는 생략
 ## Controller
 - [x] `ItemController`
   - [x] `processProducts` : 일반 상품 구매 프로세스
 - [x] `PromotionController`
   - [x] `processPromotionItem` : 프로모션 상품 구매 프로세스
-- [ ] `FrontController`
+- [x] `FrontController` : `Controller`, `View` 를 호출하여 프로그램을 컨트롤
 ## View
-- [ ] `InputView`
-- [ ] `OutputView`
+- [ ] `FileInput` : `resources` 폴더에 있는 지정된 파일을 찾아 `BufferedReader` 로 반환
+- [ ] `InputView` : 사용자 입력, 파일 읽기를 처리
+- [ ] `OutputView` :  결과를 출력
 - - -
 
 - [] 모두 구현 후 도메인, 컨트롤러 분리할 수 있으면 분리
