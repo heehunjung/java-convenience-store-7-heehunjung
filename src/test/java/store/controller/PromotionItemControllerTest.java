@@ -6,7 +6,6 @@ import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import store.controller.product.ItemController;
 import store.controller.product.PromotionItemController;
 import store.domain.Item;
 import store.domain.Stock;
@@ -25,13 +24,10 @@ public class PromotionItemControllerTest {
 
         PromotionItemController controller = new PromotionItemController(store);
         Item promotionItem = store.findPromotionProduct("치킨");
-        System.out.println(promotionItem.getPromotion().getName()+" , " + promotionItem.getName() + " , " + promotionItem.getStockCount());
         Stock stock = new Stock(5);
 
         controller.processPromotionItem(stock,promotionItem,items);
-        for (Item item : items) {
-            System.out.println(item.getPromotion().getName()+" , "+item.getStockCount()+" , "+item.getName() + " , " + item.getFree());
-        }
+
         Assertions.assertThat(stock.getStock()).isEqualTo(0);
         Assertions.assertThat(items.size()).isEqualTo(2);
 
