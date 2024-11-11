@@ -28,9 +28,6 @@ public class Promotion {
         return range.isValidRange(date);
     }
 
-    public int getTotalBuyStock(int totalStock) {
-        return buyGet.calculateBuyStock(totalStock);
-    }
 
     public String getName() {
         return name;
@@ -40,5 +37,8 @@ public class Promotion {
         return buyGet.calculateGetStock(stock);
     }
 
+    public int getTotalBuyStock(int totalStock,int currentStock) {
+        return buyGet.calculateBuyStock(totalStock, currentStock);
+    }
 
 }

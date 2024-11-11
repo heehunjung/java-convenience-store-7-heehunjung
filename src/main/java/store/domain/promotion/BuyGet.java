@@ -1,6 +1,5 @@
 package store.domain.promotion;
 
-import java.util.Objects;
 
 public class BuyGet {
     private final int getStock;
@@ -11,15 +10,22 @@ public class BuyGet {
         this.buyStock = buyCount;
     }
 
-    public int calculateBuyStock(int totalStock) {
+    public int calculateBuyStock(int totalStock, int currentStock) {
         int setCount = getStock + buyStock;
+        if (totalStock > currentStock) {
+            totalStock = currentStock;
+        }
         int getCount = totalStock / setCount;
 
         return getCount * buyStock;
     }
 
     public int calculateGetStock(int buyStock) {
+        if (buyStock < this.getStock) {
+            return 0;
+        }
         int count = buyStock / this.buyStock;
+
         return count * this.getStock;
     }
 

@@ -21,7 +21,6 @@ public class PromotionController {
         return promotions;
     }
 
-
     private Promotion setPromotion(List<String> input) {
         String name = input.get(0);
         String buy = input.get(1);
