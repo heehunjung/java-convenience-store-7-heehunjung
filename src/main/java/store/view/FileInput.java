@@ -6,7 +6,7 @@ import java.io.InputStreamReader;
 
 //TODO: 에러메세지 해결
 public class FileInput {
-    public static final String PRODUCT_FILE_NAME = "products.md";
+    public static final String ITEM_FILE_NAME = "products.md";
     public static final String PROMOTION_FILE_NAME = "promotions.md";
 
     public static BufferedReader FileInputSetting(String fileName) {
