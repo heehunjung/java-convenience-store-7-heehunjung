@@ -1,5 +1,7 @@
 package store.domain;
 
+import static store.global.ErrorMessages.INVALID_STATE_ERROR;
+
 import java.util.Objects;
 
 public class Stock {
@@ -30,15 +32,13 @@ public class Stock {
 
     private void validate(int stock) {
         if (stock < 0) {
-            //TODO : 에러 메세지 , 끝나는 에러인지 처리할 에러인지 고민해보기
-            throw new IllegalStateException("stock should be a positive number");
+            throw new IllegalStateException(INVALID_STATE_ERROR.getMessage());
         }
     }
 
     private void updateValidate(int stock) {
         if (stock > this.stock) {
-            //TODO : 에러 메세지 , 끝나는 에러인지 처리할 에러인지 고민해보기
-            throw new IllegalStateException("stock should be less than the current stock"+ stock + this.stock);
+            throw new IllegalStateException(INVALID_STATE_ERROR.getMessage());
         }
     }
 

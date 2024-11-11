@@ -21,25 +21,18 @@ import store.domain.Store;
 
 public class OutputView {
 
+    private OutputView() {
+
+    }
+
     public static void printGreeting() {
         System.out.println(GREETING_MESSAGE);
     }
 
     public static void printStoreInformation(Store store) {
-        List<Item> items = store.getProducts();
+        List<Item> items = store.getItems();
         for (Item item : items) {
-            int stock = item.getStockCount();
-            if (stock == 0) {
-                System.out.printf(ITEM_INFORMATION_FORMAT_ZERO, item.getName(), item.getPrice());
-                continue;
-            }
-            if (item.getPromotion() == null) {
-                System.out.printf(ITEM_INFORMATION_FORMAT_NO_PROMOTION, item.getName(), item.getPrice(),
-                        item.getStockCount());
-                continue;
-            }
-            System.out.printf(ITEM_INFORMATION_FORMAT, item.getName(), item.getPrice(), item.getStockCount(),
-                    item.getPromotion().getName());
+            printInformation(item);
         }
     }
 
@@ -56,11 +49,29 @@ public class OutputView {
                 System.out.printf(FREE_ITEM_INFO, item.getName(), item.getStockCount());
             }
         }
-        System.out.println(RECEIPT_LINE);
-        System.out.printf(TOTAL_PRICE,receipt.totalStock(),receipt.getTotalPrice());
-        System.out.printf(EVENT_DISCOUNT,receipt.getPromotionPrice());
-        System.out.printf(MEMBERSHIP_DISCOUNT, receipt.applyMembership());
-        System.out.printf(FINAL_AMOUNT,receipt.getTotalPrice()-receipt.getPromotionPrice()- receipt.getMembershipPrice());
+        printPriceAndEndMessage(receipt);
     }
 
+    private static void printPriceAndEndMessage(Receipt receipt) {
+        System.out.println(RECEIPT_LINE);
+        System.out.printf(TOTAL_PRICE, receipt.totalStock(), receipt.getTotalPrice());
+        System.out.printf(EVENT_DISCOUNT, receipt.getPromotionPrice());
+        System.out.printf(MEMBERSHIP_DISCOUNT, receipt.applyMembership());
+        System.out.printf(FINAL_AMOUNT,
+                receipt.getTotalPrice() - receipt.getPromotionPrice() - receipt.getMembershipPrice());
+    }
+
+    private static void printInformation(Item item) {
+        if (item.getStockCount() == 0) {
+            System.out.printf(ITEM_INFORMATION_FORMAT_ZERO, item.getName(), item.getPrice());
+            return;
+        }
+        if (item.getPromotion() == null) {
+            System.out.printf(ITEM_INFORMATION_FORMAT_NO_PROMOTION, item.getName(), item.getPrice(),
+                    item.getStockCount());
+            return;
+        }
+        System.out.printf(ITEM_INFORMATION_FORMAT, item.getName(), item.getPrice(), item.getStockCount(),
+                item.getPromotion().getName());
+    }
 }

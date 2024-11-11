@@ -4,13 +4,16 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-//TODO: 에러메세지 해결
 public class FileInput {
+
+    private FileInput() {
+
+    }
+
     public static final String ITEM_FILE_NAME = "products.md";
     public static final String PROMOTION_FILE_NAME = "promotions.md";
 
     public static BufferedReader FileInputSetting(String fileName) {
-
         InputStream inputStream = FileInput.class.getClassLoader().getResourceAsStream(fileName);
 
         if (inputStream == null) {

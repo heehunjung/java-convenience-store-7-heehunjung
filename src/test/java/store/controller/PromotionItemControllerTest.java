@@ -48,6 +48,6 @@ public class PromotionItemControllerTest {
         List<Item> items = List.of(item1, item2, item3, item4);
         List<Promotion> promotions = List.of(threePlusOne, twoPlusOne);
 
-        return new Store(items, promotions);
+        return new Store(items);
     }
 }

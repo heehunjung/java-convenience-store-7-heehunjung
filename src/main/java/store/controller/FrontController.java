@@ -56,7 +56,7 @@ public class FrontController {
     private Store initializeStore() throws IOException {
         List<Promotion> promotions = getPromotions();
         List<Item> items = getItems(promotions);
-        return new Store(items, promotions);
+        return new Store(items);
     }
 
     // 구매 프로세스 처리 메서드
@@ -64,7 +64,6 @@ public class FrontController {
         printStoreInfo(store);
 
         Map<String, Stock> itemAndStock = getStringStockMap(scanner, store);
-
         String membershipInput = getMembership(scanner);
 
         List<Item> purchasedItems = storeController.buyProcess(itemAndStock);
@@ -73,7 +72,6 @@ public class FrontController {
         this.receiptController = new ReceiptController(receipt);
 
         receiptMagic(store, scanner, receipt, membershipInput);
-
         return isContinue(scanner);
     }
 

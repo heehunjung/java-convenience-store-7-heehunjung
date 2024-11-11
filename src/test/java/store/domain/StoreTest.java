@@ -1,5 +1,7 @@
 package store.domain;
 
+import static store.domain.Item.isItemExists;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,12 +35,12 @@ public class StoreTest {
         Item item1 = store.findProduct("치킨");
         Item promotionItem1 = store.findPromotionProduct("치킨");
 
-        Assertions.assertThatThrownBy(() -> store.isItemExists(null,null))
+        Assertions.assertThatThrownBy(() -> isItemExists(null,null))
                 .isInstanceOf(IllegalArgumentException.class);
         Assertions.assertThatNoException()
-                .isThrownBy(() -> store.isItemExists(item1,null));
+                .isThrownBy(() -> isItemExists(item1,null));
         Assertions.assertThatNoException()
-                .isThrownBy(() -> store.isItemExists(item1, promotionItem1));
+                .isThrownBy(() -> isItemExists(item1, promotionItem1));
     }
 
     @DisplayName("checkPromotion_테스트_01")
@@ -49,12 +51,12 @@ public class StoreTest {
         Item item1 = store.findProduct("치킨");
         Item promotionItem1 = store.findPromotionProduct("치킨");
 
-        Assertions.assertThatThrownBy(() -> store.isItemExists(null,null))
+        Assertions.assertThatThrownBy(() -> isItemExists(null,null))
                 .isInstanceOf(IllegalArgumentException.class);
         Assertions.assertThatNoException()
-                .isThrownBy(() -> store.isItemExists(item1,null));
+                .isThrownBy(() -> isItemExists(item1,null));
         Assertions.assertThatNoException()
-                .isThrownBy(() -> store.isItemExists(item1, promotionItem1));
+                .isThrownBy(() -> isItemExists(item1, promotionItem1));
     }
 
     @DisplayName("buyPromoItemNoDiscount_테스트_01")
@@ -86,6 +88,6 @@ public class StoreTest {
         List<Item> items = List.of(item1, item2, item3, item4);
         List<Promotion> promotions = List.of(threePlusOne, twoPlusOne);
 
-        return new Store(items, promotions);
+        return new Store(items);
     }
 }

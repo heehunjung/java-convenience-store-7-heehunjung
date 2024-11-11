@@ -27,18 +27,11 @@ public class PromotionItemController {
             purchasedItem = processPromotionItems(stock, promotionalItem, purchasedItems, stockFreeItem, stockForPay);
         }
 
-        setMembership(promotionalItem, store, stockForPay, stockFreeItem);
         return purchasedItem;
     }
 
     public static int processRemainingPromotionStock(Item promotionalItem, Stock remainStock) {
         return Math.min(promotionalItem.getStockCount(), remainStock.getStock());
-    }
-
-    private void setMembership(Item promotionalItem, Store store, Stock stockForPay, Stock stockFreeItem) {
-        if (stockForPay.getStock() == promotionalItem.getBuyStockByFreeStock(stockFreeItem.getStock())) {
-            store.setMembership(false);
-        }
     }
 
     private Item processPromotionItems(Stock stock, Item promotionalItem, List<Item> purchasedItems, Stock stockFreeItem,

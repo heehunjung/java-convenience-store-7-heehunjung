@@ -1,10 +1,10 @@
 package store.domain;
 
 import static store.global.ErrorMessages.INVALID_INPUT_STOCK;
-import static store.global.ErrorMessages.INVALID_PRODUCT_PRICE;
+import static store.global.ErrorMessages.INVALID_STATE_ERROR;
+import static store.global.ErrorMessages.PRODUCT_NOT_FOUND;
 
 import java.time.LocalDateTime;
-import java.util.Objects;
 import store.domain.promotion.Promotion;
 
 public class Item {
@@ -104,7 +104,13 @@ public class Item {
 
     private void priceValidator(int price) {
         if (price <= 0) {
-            throw new IllegalStateException(INVALID_PRODUCT_PRICE.getMessage());
+            throw new IllegalStateException(INVALID_STATE_ERROR.getMessage());
+        }
+    }
+
+    public static void isItemExists(Item nomalItem, Item promotionalItem) {
+        if (nomalItem == null && promotionalItem == null) {
+            throw new IllegalArgumentException(PRODUCT_NOT_FOUND.getMessage());
         }
     }
 }

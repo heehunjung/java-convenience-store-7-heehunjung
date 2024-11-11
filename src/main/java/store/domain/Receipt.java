@@ -4,6 +4,7 @@ import java.util.List;
 
 
 public class Receipt {
+
     private final List<Item> items;
     private int totalPrice;
     private int promotionPrice;

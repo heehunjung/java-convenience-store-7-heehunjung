@@ -14,6 +14,10 @@ import java.util.Scanner;
 
 public class InputView {
 
+    private InputView() {
+
+    }
+
     public static List<String> getLines(BufferedReader br) throws IOException {
         List<String> lines = new ArrayList<>();
         String line;

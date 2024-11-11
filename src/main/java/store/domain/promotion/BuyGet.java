@@ -37,7 +37,4 @@ public class BuyGet {
         return buyStock;
     }
 
-    public int getGetStock() {
-        return getStock;
-    }
 }

@@ -1,5 +1,6 @@
 package store.controller;
 
+import static store.domain.Item.isItemExists;
 import static store.domain.Store.addPurchaseProduct;
 import static store.global.ErrorMessages.INVALID_INPUT_STOCK;
 
@@ -58,7 +59,7 @@ public class StoreController {
     }
 
     private void isValidItemAndStock(Stock stock, Item nomalItem, Item promotionalItem) {
-        store.isItemExists(nomalItem, promotionalItem);
+        isItemExists(nomalItem, promotionalItem);
         isValidStock(stock, promotionalItem, nomalItem);
     }
 
