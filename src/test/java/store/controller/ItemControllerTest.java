@@ -22,15 +22,15 @@ public class ItemControllerTest {
     @Test
     void processProducts_기능_테스트() {
 
-        Stock stock = new Stock(10);
+        Stock stock = new Stock(7);
         Item item = new Item("치킨", 1000, new Stock(10), null);
         List<Item> items = new ArrayList<>();
 
         ItemController itemController = new ItemController();
+        Item purchasedItem = new Item(item, new Stock(0), Boolean.FALSE);
 
-        itemController.processProducts(stock, item, items);
-        Assertions.assertThat(items.size()).isEqualTo(1);
-        Assertions.assertThat(items.getFirst().getName()).isEqualTo(item.getName());
+        itemController.processProducts(stock, purchasedItem, item, items);
+        Assertions.assertThat(item.getStockCount()).isEqualTo(3);
     }
 
     @DisplayName("setProducts_테스트_01")
@@ -55,9 +55,9 @@ public class ItemControllerTest {
                 new Item("오렌지주스", 1800, new Stock(9), promotions.get(2))
         );
 
-        List<Item> items = itemController.setItems(lines,promotions);
+        List<Item> items = itemController.setItems(lines, promotions);
 
-        Assertions.assertThat(items.size()).isEqualTo(lines.size()-1);
+        Assertions.assertThat(items.size()).isEqualTo(lines.size() - 1);
         Assertions.assertThat(items.get(0).getName()).isEqualTo("콜라");
         Assertions.assertThat(items.get(0).getPromotion().getName()).isEqualTo("탄산2+1");
         Assertions.assertThat(items.get(2).getName()).isEqualTo("사이다");
