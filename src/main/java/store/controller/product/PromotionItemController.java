@@ -2,7 +2,7 @@ package store.controller.product;
 
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
-import static store.domain.Store.addPurchaseProduct;
+import static store.domain.Store.addFreeProduct;
 
 import camp.nextstep.edu.missionutils.DateTimes;
 import java.util.List;
@@ -12,49 +12,53 @@ import store.domain.Store;
 
 public class PromotionItemController {
 
-    private final Store store;
 
-    public PromotionItemController(Store store) {
-        this.store = store;
-    }
-
-    public void processPromotionItem(Stock stock, Item promotionalItem, List<Item> purchasedItems) {
+    public Item processPromotionItem(Stock stock, Item promotionalItem, List<Item> purchasedItems, Store store) {
         Stock stockFreeItem = new Stock(0);
         Stock stockForPay = new Stock(0);
+        Item purchasedItem = null;
 
         if (promotionalItem == null) {
-            return;
+            return null;
         }
         // TODO : 여기도 메서드 줄이기
         if (promotionalItem.checkDate(DateTimes.now())) {
-            if (store.buyPromoItemNoDiscount(stock, promotionalItem, purchasedItems)) {
-                return;
+            Item item = store.buyPromoItemNoDiscount(stock, promotionalItem, purchasedItems);
+            if (item != null) {
+                return item;
             }
 
             promotionProcess(stock, promotionalItem, stockFreeItem, stockForPay);
-            addPurchaseProduct(stockForPay, promotionalItem, purchasedItems, FALSE);
-            addPurchaseProduct(stockFreeItem, promotionalItem, purchasedItems, TRUE);
+            purchasedItem = new Item(promotionalItem, stockForPay, FALSE);
+            addFreeProduct(stockFreeItem, promotionalItem, purchasedItems, TRUE);
         }
+
+        if (stockForPay.getStock() == promotionalItem.getBuyStockByFreeStock(stockFreeItem.getStock())){
+            store.setMembership(false);
+        }
+
+        return purchasedItem;
     }
 
+    //TODO : 메서드 길이 줄이기
     private static void promotionProcess(Stock stock, Item promotionalItem, Stock stockFreeItem, Stock stockForPay) {
-        int stockForPromotionItem = promotionalItem.getTotalBuyStock(stock.getStock());
-        int freeStock =  promotionalItem.calculateFreeStock(stockForPromotionItem);
+        int stockForPromotionItem = promotionalItem.getTotalBuyStock(stock.getStock(), promotionalItem.getStockCount());
+        int freeStock = promotionalItem.calculateFreeStock(stockForPromotionItem);
 
-        stockFreeItem.plus(promotionalItem.calculateFreeStock(stockForPromotionItem));
-        promotionalItem.updateStock(freeStock + stockForPromotionItem);
+        stockFreeItem.plus(freeStock);
+        stockForPay.plus( stockForPromotionItem);
 
-        int remainingStock = processRemainingPromotionStock(promotionalItem);
-
-        stockForPay.plus(remainingStock + stockForPromotionItem);
+        promotionalItem.updateStock(stockForPromotionItem + freeStock);
+        stock.minus (stockForPromotionItem + freeStock);
+        int remainingStock = processRemainingPromotionStock(promotionalItem, stock);
         promotionalItem.updateStock(remainingStock);
-
-        int total = stockForPay.getStock() + stockFreeItem.getStock();
-
-        stock.minus(total);
+        stock.minus(remainingStock);
+        stockForPay.plus(remainingStock);
+//      promotionalItem.updateStock(remainingStock);
+//      stock.minus(remainingStock);
     }
 
-    private static int processRemainingPromotionStock(Item promotionalItem) {
-        return Math.max(promotionalItem.getStockCount(), 0);
+    public static int processRemainingPromotionStock(Item promotionalItem, Stock remainStock) {
+        return Math.min(promotionalItem.getStockCount(), remainStock.getStock());
     }
 }

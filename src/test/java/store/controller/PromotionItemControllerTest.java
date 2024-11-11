@@ -18,18 +18,18 @@ public class PromotionItemControllerTest {
 
     @DisplayName("processPromotionItem_테스트_01")
     @Test
-    void processPromotionItem_기능_테스트_01()  {
+    void processPromotionItem_기능_테스트_01() {
         List<Item> items = new ArrayList<>();
         Store store = createStoreWithTestProductsAndPromotions();
 
-        PromotionItemController controller = new PromotionItemController(store);
+        PromotionItemController controller = new PromotionItemController();
         Item promotionItem = store.findPromotionProduct("치킨");
         Stock stock = new Stock(5);
 
-        controller.processPromotionItem(stock,promotionItem,items);
+        controller.processPromotionItem(stock, promotionItem, items, store);
 
         Assertions.assertThat(stock.getStock()).isEqualTo(0);
-        Assertions.assertThat(items.size()).isEqualTo(2);
+        Assertions.assertThat(items.size()).isEqualTo(1);
 
     }
 
