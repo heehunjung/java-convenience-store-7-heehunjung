@@ -38,7 +38,7 @@ public class Stock {
     private void updateValidate(int stock) {
         if (stock > this.stock) {
             //TODO : 에러 메세지 , 끝나는 에러인지 처리할 에러인지 고민해보기
-            throw new IllegalStateException("stock should be less than the current stock");
+            throw new IllegalStateException("stock should be less than the current stock"+ stock + this.stock);
         }
     }
 

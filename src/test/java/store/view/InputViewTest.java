@@ -1,11 +1,9 @@
 package store.view;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Scanner;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -15,7 +13,7 @@ public class InputViewTest {
     @DisplayName("getLines_테스트_01")
     @Test
     void getLines_기능_테스트() throws IOException {
-        BufferedReader br = FileInput.FileInputSetting(FileInput.PRODUCT_FILE_NAME);
+        BufferedReader br = FileInput.FileInputSetting(FileInput.ITEM_FILE_NAME);
         List<String> expected = Arrays.asList(
                 "콜라,1000,10,탄산2+1",
                 "콜라,1000,10,null",
@@ -42,7 +40,7 @@ public class InputViewTest {
     @DisplayName("getLine_테스트_01")
     @Test
     void getLines_기능_테스트_PRODUCT_파일() throws IOException {
-        BufferedReader br = FileInput.FileInputSetting(FileInput.PRODUCT_FILE_NAME);
+        BufferedReader br = FileInput.FileInputSetting(FileInput.ITEM_FILE_NAME);
         InputView.getLine(br);
         String firstLine = InputView.getLine(br);
 

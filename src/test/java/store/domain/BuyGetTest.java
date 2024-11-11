@@ -12,7 +12,7 @@ public class BuyGetTest {
     void calculateBuyStock_기능_테스트() {
         BuyGet three_but_one_get = new BuyGet(3,1);
 
-        Assertions.assertThat(three_but_one_get.calculateBuyStock(8))
+        Assertions.assertThat(three_but_one_get.calculateBuyStock(8,8))
                 .isEqualTo(6);
     }
 

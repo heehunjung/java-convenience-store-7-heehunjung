@@ -77,10 +77,10 @@ public class StoreTest {
         Item item1 = store.findProduct("치킨");
         Item promotionItem1 = store.findPromotionProduct("치킨");
         List<Item> items = new ArrayList<>();
-        Assertions.assertThat(store.buyPromoItemNoDiscount(new Stock(3), promotionItem1, items))
-                .isTrue();
+        Assertions.assertThat(store.buyPromoItemNoDiscount(new Stock(2), promotionItem1, items))
+                .isNotNull();
         Assertions.assertThat(store.buyPromoItemNoDiscount(new Stock(5), promotionItem1, items))
-                .isFalse();
+                .isNull();
     }
 
     private Store createStoreWithTestProductsAndPromotions() {

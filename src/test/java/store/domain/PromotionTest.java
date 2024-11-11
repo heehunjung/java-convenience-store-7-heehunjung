@@ -26,8 +26,8 @@ public class PromotionTest {
     void getTotalBuyStock_기능_테스트() {
         Promotion promotion = getTestPromotion();
 
-        Assertions.assertThat(promotion.getTotalBuyStock(10))
-                .isEqualTo(6);
+        Assertions.assertThat(promotion.getTotalBuyStock(2,10))
+                .isEqualTo(0);
     }
 
     @DisplayName("calculateFreeStock_테스트_01")

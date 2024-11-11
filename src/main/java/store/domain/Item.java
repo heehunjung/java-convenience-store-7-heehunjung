@@ -14,15 +14,16 @@ public class Item {
     private final Promotion promotion;
     private final int price;
     private final Stock stock;
+    private final int totalStock;
 
     public Item(String name, int price, Stock stock, Promotion promotion) {
         priceValidator(price);
-
         this.name = name;
         this.price = price;
         this.promotion = promotion;
         this.stock = stock;
         this.isFree = null;
+        this.totalStock = stock.getStock();
     }
 
     public Item(Item item, Stock stock, Boolean isFree) {
@@ -30,6 +31,7 @@ public class Item {
         this.name = item.getName();
         this.price = item.getPrice();
         this.promotion = item.getPromotion();
+        this.totalStock = item.getTotalStock();
         this.stock = stock;
         this.isFree = isFree;
     }
@@ -37,15 +39,18 @@ public class Item {
     public int getBuyStock() {
         return promotion.getBuyStock();
     }
-
+    public int getTotalStock() {
+        return totalStock;
+    }
     public int getGetStock() {
         return promotion.getGetStock();
     }
 
-    public int getTotalBuyStock(int stock) {
-        return promotion.getTotalBuyStock(stock);
+    public int getTotalBuyStock(int stock, int currentStock) {
+        return promotion.getTotalBuyStock(stock, currentStock);
     }
 
+    //static?
     public int calculateFreeStock(int stock) {
         return promotion.calculateFreeStock(stock);
     }
@@ -53,6 +58,16 @@ public class Item {
     public void updateStock(int stock) {
         this.stock
                 .minus(stock);
+    }
+
+    public void addStock(int stock) {
+        this.stock
+                .plus(stock);
+    }
+
+    public int getBuyStockByFreeStock(int stock) {
+        int buyStock = promotion.getBuyStock();
+        return buyStock * stock;
     }
 
     public boolean checkDate(LocalDateTime now) {
@@ -80,6 +95,8 @@ public class Item {
     public int getStockCount() {
         return stock.getStock();
     }
+
+
     public int getPrice() {
         return price;
     }
@@ -98,4 +115,14 @@ public class Item {
         }
     }
 
+    @Override
+    public String toString() {
+        return "Item{" +
+                "isFree=" + isFree +
+                ", name='" + name + '\'' +
+                ", promotion=" + promotion +
+                ", price=" + price +
+                ", stock=" + stock.getStock() +
+                '}';
+    }
 }
