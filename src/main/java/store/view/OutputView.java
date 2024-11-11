@@ -45,7 +45,7 @@ public class OutputView {
         }
         System.out.println(FREE_ITEM_START);
         for (Item item : receipt.getProducts()) {
-            if (item.getFree()) {
+            if (item.getFree() && item.getStockCount() != 0) {
                 System.out.printf(FREE_ITEM_INFO, item.getName(), item.getStockCount());
             }
         }
