@@ -1,8 +1,13 @@
 package store.domain;
 
+import static store.global.InputConstant.NO_INPUT_BIG;
+import static store.global.InputConstant.YES_INPUT_BIG;
+import static store.utils.Validator.isUserContinuingWithNo;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import store.utils.Validator;
 import store.view.InputView;
 
 public class Receipt {
@@ -34,19 +39,18 @@ public class Receipt {
         if (promotionItemInStore == null) {
             return;
         }
-        // 구매한 것
+
         int currentStock = normalItem.getStockCount();
         int currentFreeStock = promotionItem.getStockCount();
         int currentPromotionStock = promotionItem.getBuyStockByFreeStock(currentFreeStock);
         int moreFreeStock = promotionItemInStore.getTotalBuyStock(currentStock - currentPromotionStock + 1,
                 promotionItemInStore.getStockCount());
-        String yesOrNO = "N";
+        String yesOrNO = NO_INPUT_BIG;
         if (moreFreeStock > 0) {
             yesOrNO = InputView.getMoreFreeStock(sc, normalItem.getName(), 1);
         }
-        if (yesOrNO.equals("Y") || yesOrNO.equals("y")) {
+        if (Validator.isUserContinuing(yesOrNO)) {
             promotionItem.addStock(1);
-            // store
             promotionItemInStore.updateStock(1 + moreFreeStock);
             itemInStore.addStock(moreFreeStock);
         }
@@ -149,9 +153,6 @@ public class Receipt {
             }
         }
         if (isApplyMembership()) {
-            System.out.println("discountPrice = " + discountPrice);
-            System.out.println("totalPrice = " + totalPrice);
-            System.out.println("promotionPrice = " + promotionPrice);
             membershipPrice = Math.min((int) ((totalPrice - promotionPrice - discountPrice) * 0.3), 8000);
             return membershipPrice;
         }
@@ -170,7 +171,7 @@ public class Receipt {
     private void isNotApplyPromotion(Scanner sc, Store store, Item item) {
         Item promotionItemInStore = store.findPromotionProduct(item.getName());
         Item freeItem = findPromotionProductWithNull(item);
-        String isPurchase = "Y";
+        String isPurchase = YES_INPUT_BIG;
         if (promotionItemInStore == null || freeItem == null) {
             return;
         }
@@ -181,7 +182,7 @@ public class Receipt {
         if (getCount <= currentBuyStockWithNoPromotion) {
             isPurchase = InputView.getAgreeBuyWithNoPromotion(sc,item.getName(),currentBuyStockWithNoPromotion);
         }
-        if (isPurchase.equals("n") || isPurchase.equals("N")) {
+        if (isUserContinuingWithNo(isPurchase)) {
             notPurchase(store,item,currentBuyStockWithNoPromotion);
         }
     }

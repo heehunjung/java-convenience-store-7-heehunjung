@@ -14,7 +14,10 @@ import static store.global.InputConstant.YES_INPUT_SMALL;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import store.domain.Stock;
+import store.domain.Store;
 
 public class Validator {
 
@@ -65,5 +68,7 @@ public class Validator {
     public static boolean isUserContinuing(String input) {
         return input.equals(YES_INPUT_BIG) || input.equals(YES_INPUT_SMALL);
     }
-
+    public static boolean isUserContinuingWithNo(String input) {
+        return input.equals(NO_INPUT_BIG) || input.equals(NO_INPUT_SMALL);
+    }
 }

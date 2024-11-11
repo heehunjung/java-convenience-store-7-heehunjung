@@ -54,8 +54,7 @@ public class PromotionItemController {
         promotionalItem.updateStock(remainingStock);
         stock.minus(remainingStock);
         stockForPay.plus(remainingStock);
-//      promotionalItem.updateStock(remainingStock);
-//      stock.minus(remainingStock);
+
     }
 
     public static int processRemainingPromotionStock(Item promotionalItem, Stock remainStock) {

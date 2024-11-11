@@ -10,7 +10,7 @@ import store.utils.Parser;
 
 public class ItemController {
 
-    public void processProducts(Stock remainStock, Item purchasedItem, Item nomalItem, List<Item> purchasedItems) {
+    public void processItems(Stock remainStock, Item purchasedItem, Item nomalItem, List<Item> purchasedItems) {
         int remain = remainStock.getStock();
         if (remain > 0 && nomalItem.getStockCount() > 0){
             // todo : 흐름 상 nomalItem.getStockCount()가 무조건 remainStock 보다 크긴 한대 검증 해야함?

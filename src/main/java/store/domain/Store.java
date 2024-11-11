@@ -52,6 +52,10 @@ public class Store {
         }
     }
 
+    public List<Item> getItems() {
+        return items;
+    }
+
     public Item findProduct(String input) {
         for (Item item : items) {
             if (item.getName().equals(input) && item.getPromotion() == null) {

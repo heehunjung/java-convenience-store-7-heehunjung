@@ -1,6 +1,5 @@
 package store.controller;
 
-import static store.domain.Store.addPurchaseProduct;
 import static store.global.InputConstant.YES_INPUT_BIG;
 import static store.utils.Validator.isUserContinuing;
 
@@ -29,39 +28,42 @@ public class FrontController {
     private final PromotionItemController promotionItemController;
     private final ItemController itemController;
     private final PromotionController promotionController;
+    private StoreController storeController;
 
     public FrontController(ItemController itemController, PromotionItemController promotionItemController,
-                           PromotionController promotionController1) {
+                           PromotionController promotionController) {
         this.promotionItemController = promotionItemController;
         this.itemController = itemController;
-        this.promotionController = promotionController1;
+        this.promotionController = promotionController;
     }
 
-    //TODO : IOException from getLines -> Main 에서 처리
     public void run() throws IOException {
+        Store store = initializeStore();
+        storeController = new StoreController(itemController, store, promotionItemController);
         Scanner scanner = new Scanner(System.in);
-        List<Promotion> promotions = getPromotions();
-        List<Item> items = getItems(promotions);
 
-        Store store = new Store(items, promotions);
         String isContinue = YES_INPUT_BIG;
+        itemController.checkItems(store.getItems(), store);
 
-        itemController.checkItems(items,store);
-
-        while(isUserContinuing(isContinue)) {
+        while (isUserContinuing(isContinue)) {
             isContinue = processPurchaseInStore(store, scanner);
         }
     }
 
+    private Store initializeStore() throws IOException {
+        List<Promotion> promotions = getPromotions();
+        List<Item> items = getItems(promotions);
+        return new Store(items, promotions);
+    }
+
     private String processPurchaseInStore(Store store, Scanner scanner) {
-        String isContinue;
         printStoreInfo(store);
 
         Map<String, Stock> itemAndStock = getStringStockMap(scanner, store);
 
         String membershipInput = getMembership(scanner);
 
-        List<Item> purchasedItems = buyProcess(itemAndStock, store);
+        List<Item> purchasedItems = storeController.buyProcess(itemAndStock);
 
         Receipt receipt = new Receipt(purchasedItems, false);
         receiptMagic(store, scanner, receipt, membershipInput);
@@ -70,10 +72,15 @@ public class FrontController {
     }
 
     private String isContinue(Scanner scanner) {
-        String isContinue;
-        isContinue = InputView.getEndingMessage(scanner);
-        Validator.YesOrNoValidator(isContinue);
-        return isContinue;
+        try {
+            String isContinue;
+            isContinue = InputView.getEndingMessage(scanner);
+            Validator.YesOrNoValidator(isContinue);
+            return isContinue;
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return isContinue(scanner);
+        }
     }
 
     private void receiptMagic(Store store, Scanner scanner, Receipt receipt, String membershipInput) {
@@ -99,45 +106,44 @@ public class FrontController {
     }
 
     private List<Item> getItems(List<Promotion> promotions) throws IOException {
-        BufferedReader br;
-        br = FileInput.FileInputSetting(FileInput.ITEM_FILE_NAME);
+        BufferedReader br = FileInput.FileInputSetting(FileInput.ITEM_FILE_NAME);
         List<String> itemStrings = InputView.getLines(br);
         return itemController.setItems(itemStrings, promotions);
     }
 
-    private Map<String, Stock> getStringStockMap(Scanner scanner,Store store) {
+    private Map<String, Stock> getStringStockMap(Scanner scanner, Store store) {
         try {
             String itemInput = InputView.getBuyProductMessage(scanner);
             Validator.buyInputFormatValidator(itemInput);
             Map<String, Stock> itemAndStock = getStringStockMap(itemInput);
-            duplicateNameValidate(itemAndStock);
+
             invalidStockValidator(itemAndStock, store);
             return itemAndStock;
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
-            return getStringStockMap(scanner,store);
+            return getStringStockMap(scanner, store);
         }
     }
 
-    private void invalidStockValidator(Map<String, Stock> itemAndStock,Store store) {
-        itemAndStock.forEach((name,stock) ->{
+    private void invalidStockValidator(Map<String, Stock> itemAndStock, Store store) {
+        itemAndStock.forEach((name, stock) -> {
             Item item = store.findProduct(name);
             Item promotionItem = store.findPromotionProduct(name);
-            store.isValidStock(stock,item,promotionItem);
-                }
-                );
-    }
-    private void duplicateNameValidate(Map<String, Stock> itemAndStock) {
-        List<String> names = new ArrayList<>(itemAndStock.keySet());
-        Validator.duplicatedNameValidator(names);
+            store.isValidStock(stock, item, promotionItem);
+        });
     }
 
     private Map<String, Stock> getStringStockMap(String itemInput) {
         List<String> splitItemInput = Parser.splitWithCommaDelimiter(itemInput);
+        List<String> itemNames = new ArrayList<>();
         Map<String, Stock> itemAndStock = new HashMap<>();
+
         for (String itemInfo : splitItemInput) {
             Parser.itemAndStockParser(itemInfo, itemAndStock);
+            itemNames.add(Parser.splitWithBarDelimiter(itemInfo).getFirst());
         }
+
+        Validator.duplicatedNameValidator(itemNames);
         return itemAndStock;
     }
 
@@ -150,35 +156,6 @@ public class FrontController {
             System.out.println(e.getMessage());
             return getMembership(scanner);
         }
-    }
-
-    public List<Item> buyProcess(Map<String, Stock> shoppingCarts, Store store) {
-        List<Item> purchasedItems = new ArrayList<>();
-
-        shoppingCarts.forEach((product, stock) -> {
-            Item nomalItem = store.findProduct(product);
-            Item promotionalItem = store.findPromotionProduct(product);
-            // 상품 존재 여부 확인
-            store.isProductExists(nomalItem, promotionalItem);
-
-            // 유효한 수량 확인
-            store.isValidStock(stock, promotionalItem, nomalItem);
-
-            // 프로모션 제품 처리
-            Item item = promotionItemController.processPromotionItem(stock, promotionalItem, purchasedItems,
-                    store);
-
-            if (item == null) {
-                item = new Item(nomalItem, new Stock(0), Boolean.FALSE);
-            }
-            // 일반 제품 처리
-            itemController.processProducts(stock, item, nomalItem, purchasedItems);
-
-            addPurchaseProduct(purchasedItems,item);
-
-        });
-
-        return purchasedItems;
     }
 
 }

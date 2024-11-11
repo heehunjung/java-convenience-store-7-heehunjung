@@ -1,26 +1,21 @@
 package store.controller;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import org.assertj.core.api.Assertions;
-import org.assertj.core.internal.Lists;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import store.controller.product.ItemController;
 import store.domain.Item;
 import store.domain.Stock;
-import store.domain.Store;
-import store.domain.promotion.BuyGet;
 import store.domain.promotion.Promotion;
-import store.domain.promotion.Range;
 
 public class ItemControllerTest {
 
     @DisplayName("processProducts_테스트_01")
     @Test
-    void processProducts_기능_테스트() {
+    void processItems_기능_테스트() {
 
         Stock stock = new Stock(7);
         Item item = new Item("치킨", 1000, new Stock(10), null);
@@ -29,7 +24,7 @@ public class ItemControllerTest {
         ItemController itemController = new ItemController();
         Item purchasedItem = new Item(item, new Stock(0), Boolean.FALSE);
 
-        itemController.processProducts(stock, purchasedItem, item, items);
+        itemController.processItems(stock, purchasedItem, item, items);
         Assertions.assertThat(item.getStockCount()).isEqualTo(3);
     }
 
