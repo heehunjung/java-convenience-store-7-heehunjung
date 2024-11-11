@@ -75,13 +75,12 @@
   - [x] `processProducts` : 일반 상품 구매 프로세스
 - [x] `PromotionItemController`
   - [x] `processPromotionItem` : 프로모션 상품 구매 프로세스
-- [ ] `promotionController` : 프로모션 클래스를 조작
-- [ ] `FrontController` : `Controller`, `View` 를 호출하여 프로그램을 컨트롤
-  - [ ] `run` : 필요한 컨트롤러, 유틸 클래스를 호출하여 프로그램을 실행
+- [x] `promotionController` : 프로모션 클래스를 조작
+- [x] `FrontController` : `Controller`, `View` 를 호출하여 프로그램을 컨트롤
+  - [x] `run` : 필요한 컨트롤러, 유틸 클래스를 호출하여 프로그램을 실행
 ## View
-- [] `FileInput` : `resources` 폴더에 있는 지정된 파일을 찾아 `BufferedReader` 로 반환
-- [] `InputView` : 사용자 입력, 파일 읽기를 처리
-- [] `OutputView` :  결과를 출력
+- [x] `FileInput` : `resources` 폴더에 있는 지정된 파일을 찾아 `BufferedReader` 로 반환
+- [x] `InputView` : 사용자 입력, 파일 읽기를 처리
+- [x] `OutputView` :  결과를 출력
 - - -
-
-- [] 모두 구현 후 도메인, 컨트롤러 분리할 수 있으면 분리
+- [x] 모두 구현 후 도메인, 컨트롤러 분리할 수 있으면 분리

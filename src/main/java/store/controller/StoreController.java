@@ -3,6 +3,7 @@ package store.controller;
 import static store.domain.Item.isItemExists;
 import static store.domain.Store.addPurchaseProduct;
 import static store.global.ErrorMessages.INVALID_INPUT_STOCK;
+import static store.global.ErrorMessages.PRODUCT_NOT_FOUND;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,6 +51,19 @@ public class StoreController {
 
         if (promotionStockCount + normalStockCount < stock.getStock()) {
             throw new IllegalArgumentException(INVALID_INPUT_STOCK.getMessage());
+        }
+    }
+
+    public void isValidName(String name) {
+        boolean flag = false;
+        for(Item item : store.getItems()){
+            if (item.getName().equals(name)) {
+                flag = true;
+                break;
+            }
+        }
+        if (!flag) {
+            throw new IllegalArgumentException(PRODUCT_NOT_FOUND.getMessage());
         }
     }
 

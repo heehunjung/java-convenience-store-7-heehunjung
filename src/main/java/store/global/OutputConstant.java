@@ -15,15 +15,15 @@ public class OutputConstant {
 
     //RECEIPT OUTPUT
     public static final String STARTING_MESSAGE = """
-
-            ==============W 편의점================
-            상품명\t\t\t수량\t금액""";
-    public static final String BUY_ITEM_INFO = "%-10s\t%5s\t%,d\n";
+        ==============W 편의점================
+        상품명\t\t\t수량\t\t금액""";
+    public static final String BUY_ITEM_INFO = "%-8s\t\t%d \t\t%,d\n";
     public static final String FREE_ITEM_START = "=============증\t정===============";
-    public static final String FREE_ITEM_INFO = "%-10s\t%5s\n";
+    public static final String FREE_ITEM_INFO = "%-8s\t\t%d\n";
     public static final String RECEIPT_LINE = "====================================";
-    public static final String TOTAL_PRICE = "총구매액\t\t%5d\t%,d\n";
-    public static final String EVENT_DISCOUNT = "행사할인\t\t\t%,d\n";
-    public static final String MEMBERSHIP_DISCOUNT = "멤버십할인\t\t%,d\n";
-    public static final String FINAL_AMOUNT = "내실돈\t\t\t%,d\n";
+    public static final String TOTAL_PRICE = "총구매액\t\t\t%d\t\t%,d\n";
+    public static final String EVENT_DISCOUNT = "행사할인\t\t\t\t\t-%,d";
+    public static final String MEMBERSHIP_DISCOUNT = "멤버십할인\t\t\t\t-%,d\n";
+    public static final String FINAL_AMOUNT = "내실돈\t\t\t\t\t%,d\n";
+
 }

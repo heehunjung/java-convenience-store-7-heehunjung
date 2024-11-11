@@ -135,6 +135,7 @@ public class FrontController {
         itemAndStock.forEach((name, stock) -> {
             Item item = store.findProduct(name);
             Item promotionItem = store.findPromotionProduct(name);
+            storeController.isValidName(name);
             storeController.isValidStock(stock, item, promotionItem);
         });
     }
