@@ -3,12 +3,14 @@ package store.utils;
 import static store.global.ErrorMessages.INVALID_INPUT_STOCK_NEGATIVE;
 import static store.global.ErrorMessages.INVALID_INPUT_YES_OR_NO;
 import static store.global.InputConstant.DELIMITER;
-import static store.global.InputConstant.NO_INPUT;
+import static store.global.InputConstant.NO_INPUT_BIG;
+import static store.global.InputConstant.NO_INPUT_SMALL;
 import static store.global.InputConstant.PRODUCT_STOCK_PATTERN;
-import static store.global.InputConstant.YES_INPUT;
 import static store.global.ErrorMessages.DUPLICATE_INPUT_ERROR;
 import static store.global.ErrorMessages.INVALID_INPUT_NULL_EMPTY;
 import static store.global.ErrorMessages.INVALID_INPUT_PATTERN;
+import static store.global.InputConstant.YES_INPUT_BIG;
+import static store.global.InputConstant.YES_INPUT_SMALL;
 
 import java.util.HashSet;
 import java.util.List;
@@ -43,7 +45,7 @@ public class Validator {
     public static void YesOrNoValidator(String input) {
         nullOrEmptyValidator(input);
 
-        if (!(input.equals(YES_INPUT) || input.equals(NO_INPUT))) {
+        if (!(input.equals(YES_INPUT_BIG) || input.equals(YES_INPUT_SMALL) || input.equals(NO_INPUT_BIG) || input.equals(NO_INPUT_SMALL))) {
             throw new IllegalArgumentException(INVALID_INPUT_YES_OR_NO.getMessage());
         }
     }
