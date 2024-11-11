@@ -115,14 +115,4 @@ public class Item {
         }
     }
 
-    @Override
-    public String toString() {
-        return "Item{" +
-                "isFree=" + isFree +
-                ", name='" + name + '\'' +
-                ", promotion=" + promotion +
-                ", price=" + price +
-                ", stock=" + stock.getStock() +
-                '}';
-    }
 }

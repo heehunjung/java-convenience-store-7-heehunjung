@@ -62,4 +62,8 @@ public class Validator {
         }
     }
 
+    public static boolean isUserContinuing(String input) {
+        return input.equals(YES_INPUT_BIG) || input.equals(YES_INPUT_SMALL);
+    }
+
 }
