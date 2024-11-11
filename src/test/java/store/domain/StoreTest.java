@@ -27,30 +27,18 @@ public class StoreTest {
 
     @DisplayName("isValidStock_테스트_01")
     @Test
-    void isValidStock_기능_테스트() {
+    void isItemExists_기능_테스트() {
         Store store = createStoreWithTestProductsAndPromotions();
 
         Item item1 = store.findProduct("치킨");
         Item promotionItem1 = store.findPromotionProduct("치킨");
 
-        Assertions.assertThatThrownBy(() -> store.isValidStock(new Stock(16), item1, promotionItem1))
-                .isInstanceOf(IllegalArgumentException.class);
-    }
-
-    @DisplayName("isValidStock_테스트_01")
-    @Test
-    void isProductExists_기능_테스트() {
-        Store store = createStoreWithTestProductsAndPromotions();
-
-        Item item1 = store.findProduct("치킨");
-        Item promotionItem1 = store.findPromotionProduct("치킨");
-
-        Assertions.assertThatThrownBy(() -> store.isProductExists(null,null))
+        Assertions.assertThatThrownBy(() -> store.isItemExists(null,null))
                 .isInstanceOf(IllegalArgumentException.class);
         Assertions.assertThatNoException()
-                .isThrownBy(() -> store.isProductExists(item1,null));
+                .isThrownBy(() -> store.isItemExists(item1,null));
         Assertions.assertThatNoException()
-                .isThrownBy(() -> store.isProductExists(item1, promotionItem1));
+                .isThrownBy(() -> store.isItemExists(item1, promotionItem1));
     }
 
     @DisplayName("checkPromotion_테스트_01")
@@ -61,12 +49,12 @@ public class StoreTest {
         Item item1 = store.findProduct("치킨");
         Item promotionItem1 = store.findPromotionProduct("치킨");
 
-        Assertions.assertThatThrownBy(() -> store.isProductExists(null,null))
+        Assertions.assertThatThrownBy(() -> store.isItemExists(null,null))
                 .isInstanceOf(IllegalArgumentException.class);
         Assertions.assertThatNoException()
-                .isThrownBy(() -> store.isProductExists(item1,null));
+                .isThrownBy(() -> store.isItemExists(item1,null));
         Assertions.assertThatNoException()
-                .isThrownBy(() -> store.isProductExists(item1, promotionItem1));
+                .isThrownBy(() -> store.isItemExists(item1, promotionItem1));
     }
 
     @DisplayName("buyPromoItemNoDiscount_테스트_01")

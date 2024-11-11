@@ -12,17 +12,20 @@ public class ItemController {
 
     public void processItems(Stock remainStock, Item purchasedItem, Item nomalItem, List<Item> purchasedItems) {
         int remain = remainStock.getStock();
-        if (remain > 0 && nomalItem.getStockCount() > 0){
-            // todo : 흐름 상 nomalItem.getStockCount()가 무조건 remainStock 보다 크긴 한대 검증 해야함?
+        if (remain > 0 && nomalItem.getStockCount() > 0) {
             int updateStock = Math.min(remain, nomalItem.getStockCount());
-            nomalItem.updateStock(updateStock);
-            purchasedItem.addStock(updateStock);
-            remainStock.minus(updateStock);
+            updateItemStocks(remainStock, purchasedItem, nomalItem, updateStock);
         }
     }
 
+    private void updateItemStocks(Stock remainStock, Item purchasedItem, Item nomalItem, int updateStock) {
+        nomalItem.updateStock(updateStock);
+        purchasedItem.addStock(updateStock);
+        remainStock.minus(updateStock);
+    }
+
     public List<Item> setItems(List<String> information, List<Promotion> promotions) {
-        List<Item> items = new ArrayList<Item>();
+        List<Item> items = new ArrayList<>();
 
         for (String item : information.subList(1, information.size())) {
             List<String> fields = Parser.splitWithCommaDelimiter(item);
@@ -30,15 +33,6 @@ public class ItemController {
         }
 
         return items;
-    }
-
-    public void checkItems(List<Item> items, Store store) {
-        List<Item> newItems = new ArrayList<>(items);
-        newItems.stream()
-                .filter(item -> store.findPromotionProduct(item.getName()) != null && store.findProduct(item.getName()) == null)
-                .forEach(item -> store.addItem(
-                        new Item(item.getName(), store.findPromotionProduct(item.getName()).getPrice(), new Stock(0), null))
-                );
     }
 
     private Item setItem(List<String> information, List<Promotion> promotions) {
@@ -59,5 +53,14 @@ public class ItemController {
             }
         }
         return null;
+    }
+
+    public void checkItems(List<Item> items, Store store) {
+        List<Item> newItems = new ArrayList<>(items);
+        newItems.stream()
+                .filter(item -> store.findPromotionProduct(item.getName()) != null && store.findProduct(item.getName()) == null)
+                .forEach(item -> store.addItem(
+                        new Item(item.getName(), store.findPromotionProduct(item.getName()).getPrice(), new Stock(0), null))
+                );
     }
 }

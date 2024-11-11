@@ -27,7 +27,6 @@ public class Item {
     }
 
     public Item(Item item, Stock stock, Boolean isFree) {
-
         this.name = item.getName();
         this.price = item.getPrice();
         this.promotion = item.getPromotion();
@@ -36,33 +35,16 @@ public class Item {
         this.isFree = isFree;
     }
 
-    public int getBuyStock() {
-        return promotion.getBuyStock();
-    }
-    public int getTotalStock() {
-        return totalStock;
-    }
-    public int getGetStock() {
-        return promotion.getGetStock();
-    }
-
-    public int getTotalBuyStock(int stock, int currentStock) {
-        return promotion.getTotalBuyStock(stock, currentStock);
-    }
-
-    //static?
     public int calculateFreeStock(int stock) {
         return promotion.calculateFreeStock(stock);
     }
 
     public void updateStock(int stock) {
-        this.stock
-                .minus(stock);
+        this.stock.minus(stock);
     }
 
     public void addStock(int stock) {
-        this.stock
-                .plus(stock);
+        this.stock.plus(stock);
     }
 
     public int getBuyStockByFreeStock(int stock) {
@@ -78,6 +60,18 @@ public class Item {
         if (!this.stock.compare(stock)) {
             throw new IllegalArgumentException(INVALID_INPUT_STOCK.getMessage());
         }
+    }
+
+    public int getBuyStock() {
+        return promotion.getBuyStock();
+    }
+
+    public int getTotalStock() {
+        return totalStock;
+    }
+
+    public int getTotalBuyStock(int stock, int currentStock) {
+        return promotion.getTotalBuyStock(stock, currentStock);
     }
 
     public int calculatePrice() {
@@ -96,7 +90,6 @@ public class Item {
         return stock.getStock();
     }
 
-
     public int getPrice() {
         return price;
     }
@@ -114,5 +107,4 @@ public class Item {
             throw new IllegalStateException(INVALID_PRODUCT_PRICE.getMessage());
         }
     }
-
 }

@@ -30,7 +30,10 @@ public class Validator {
             itemAndStockFormatValidator(s);
         }
     }
+    public static void stockNameValidator(String input) {
+        nullOrEmptyValidator(input);
 
+    }
     public static void duplicatedNameValidator(List<String> input) {
         Set<String> uniqueNames = new HashSet<>(input);
 

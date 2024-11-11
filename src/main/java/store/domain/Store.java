@@ -33,24 +33,12 @@ public class Store {
     }
 
     // TODO: 다른 곳으로 빼야 될듯 STATIC 아니면 ITEM 쪽으로
-    public void isProductExists(Item nomalItem, Item promotionalItem) {
+    public void isItemExists(Item nomalItem, Item promotionalItem) {
         if (nomalItem == null && promotionalItem == null) {
             throw new IllegalArgumentException(PRODUCT_NOT_FOUND.getMessage());
         }
     }
 
-    public void isValidStock(Stock stock, Item promotionalItem, Item normalItem) {
-        int promotionStockCount = Optional.ofNullable(getProductStock(promotionalItem))
-                .map(Stock::getStock)
-                .orElse(0);
-        int normalStockCount = Optional.ofNullable(getProductStock(normalItem))
-                .map(Stock::getStock)
-                .orElse(0);
-
-        if (promotionStockCount + normalStockCount < stock.getStock()) {
-            throw new IllegalArgumentException(INVALID_INPUT_STOCK.getMessage());
-        }
-    }
 
     public List<Item> getItems() {
         return items;
@@ -76,10 +64,6 @@ public class Store {
             }
         }
         return null;
-    }
-
-    public boolean isMembership() {
-        return isMembership;
     }
 
     public List<Item> getProducts() {
@@ -108,7 +92,7 @@ public class Store {
         return promotionalItem.getBuyStock() > stock;
     }
 
-    private static Stock getProductStock(Item item) {
+    public Stock getProductStock(Item item) {
         Stock promotionStock = null;
         if (item != null) {
             promotionStock = item.getStock();

@@ -16,7 +16,7 @@ public class ReceiptTest {
 
         Receipt receipt = new Receipt(items, true);
 
-        Assertions.assertThat(receipt.isApplyMembership())
+        Assertions.assertThat(receipt.getMembership())
                 .isTrue();
     }
 

@@ -29,6 +29,7 @@ public class FrontController {
     private final ItemController itemController;
     private final PromotionController promotionController;
     private StoreController storeController;
+    private ReceiptController receiptController;
 
     public FrontController(ItemController itemController, PromotionItemController promotionItemController,
                            PromotionController promotionController) {
@@ -37,6 +38,7 @@ public class FrontController {
         this.promotionController = promotionController;
     }
 
+    // 프로그램 실행 메서드
     public void run() throws IOException {
         Store store = initializeStore();
         storeController = new StoreController(itemController, store, promotionItemController);
@@ -50,12 +52,14 @@ public class FrontController {
         }
     }
 
+    // 초기화 관련 메서드
     private Store initializeStore() throws IOException {
         List<Promotion> promotions = getPromotions();
         List<Item> items = getItems(promotions);
         return new Store(items, promotions);
     }
 
+    // 구매 프로세스 처리 메서드
     private String processPurchaseInStore(Store store, Scanner scanner) {
         printStoreInfo(store);
 
@@ -66,11 +70,14 @@ public class FrontController {
         List<Item> purchasedItems = storeController.buyProcess(itemAndStock);
 
         Receipt receipt = new Receipt(purchasedItems, false);
+        this.receiptController = new ReceiptController(receipt);
+
         receiptMagic(store, scanner, receipt, membershipInput);
 
         return isContinue(scanner);
     }
 
+    // 반복 확인 메서드
     private String isContinue(Scanner scanner) {
         try {
             String isContinue;
@@ -83,22 +90,19 @@ public class FrontController {
         }
     }
 
+    // 영수증 관련 메서드
     private void receiptMagic(Store store, Scanner scanner, Receipt receipt, String membershipInput) {
-        receipt.notifyStockForFree(store, scanner);
-        receipt.notifyPurchasedInfo(store, scanner);
+        receiptController.notifyStockForFree(store, scanner);
+        receiptController.notifyPurchasedInfo(store, scanner);
         receipt.calculatePrice();
 
         if (isUserContinuing(membershipInput)) {
-            receipt.checkMembership();
+            receiptController.checkMembership();
         }
         OutputView.printReceipt(receipt);
     }
 
-    private void printStoreInfo(Store store) {
-        OutputView.printGreeting();
-        OutputView.printStoreInformation(store);
-    }
-
+    // 프로모션 정보 초기화 메서드
     private List<Promotion> getPromotions() throws IOException {
         BufferedReader br = FileInput.FileInputSetting(FileInput.PROMOTION_FILE_NAME);
         List<String> promotionStrings = InputView.getLines(br);
@@ -111,12 +115,10 @@ public class FrontController {
         return itemController.setItems(itemStrings, promotions);
     }
 
+    // 재고 및 구매 항목 관련 메서드
     private Map<String, Stock> getStringStockMap(Scanner scanner, Store store) {
         try {
-            String itemInput = InputView.getBuyProductMessage(scanner);
-            Validator.buyInputFormatValidator(itemInput);
-            Map<String, Stock> itemAndStock = getStringStockMap(itemInput);
-
+            Map<String, Stock> itemAndStock = getStringStockMap(scanner);
             invalidStockValidator(itemAndStock, store);
             return itemAndStock;
         } catch (IllegalArgumentException e) {
@@ -125,11 +127,17 @@ public class FrontController {
         }
     }
 
+    private Map<String, Stock> getStringStockMap(Scanner scanner) {
+        String itemInput = InputView.getBuyProductMessage(scanner);
+        Validator.buyInputFormatValidator(itemInput);
+        return getStringStockMap(itemInput);
+    }
+
     private void invalidStockValidator(Map<String, Stock> itemAndStock, Store store) {
         itemAndStock.forEach((name, stock) -> {
             Item item = store.findProduct(name);
             Item promotionItem = store.findPromotionProduct(name);
-            store.isValidStock(stock, item, promotionItem);
+            storeController.isValidStock(stock, item, promotionItem);
         });
     }
 
@@ -142,20 +150,30 @@ public class FrontController {
             Parser.itemAndStockParser(itemInfo, itemAndStock);
             itemNames.add(Parser.splitWithBarDelimiter(itemInfo).getFirst());
         }
-
         Validator.duplicatedNameValidator(itemNames);
         return itemAndStock;
     }
 
+    // 멤버십 확인 메서드
     private String getMembership(Scanner scanner) {
         try {
-            String membershipInput = InputView.getMembershipMessage(scanner);
-            Validator.YesOrNoValidator(membershipInput);
-            return membershipInput;
+            return isUseMembership(scanner);
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
             return getMembership(scanner);
         }
+    }
+
+    private String isUseMembership(Scanner scanner) {
+        String membershipInput = InputView.getMembershipMessage(scanner);
+        Validator.YesOrNoValidator(membershipInput);
+        return membershipInput;
+    }
+
+    // 스토어 정보 출력 메서드
+    private void printStoreInfo(Store store) {
+        OutputView.printGreeting();
+        OutputView.printStoreInformation(store);
     }
 
 }

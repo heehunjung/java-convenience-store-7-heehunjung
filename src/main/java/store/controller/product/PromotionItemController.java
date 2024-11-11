@@ -12,52 +12,66 @@ import store.domain.Store;
 
 public class PromotionItemController {
 
-
     public Item processPromotionItem(Stock stock, Item promotionalItem, List<Item> purchasedItems, Store store) {
         Stock stockFreeItem = new Stock(0);
         Stock stockForPay = new Stock(0);
         Item purchasedItem = null;
-
         if (promotionalItem == null) {
             return null;
         }
-        // TODO : 여기도 메서드 줄이기
         if (promotionalItem.checkDate(DateTimes.now())) {
             Item item = store.buyPromoItemNoDiscount(stock, promotionalItem, purchasedItems);
             if (item != null) {
                 return item;
             }
-
-            promotionProcess(stock, promotionalItem, stockFreeItem, stockForPay);
-            purchasedItem = new Item(promotionalItem, stockForPay, FALSE);
-            addFreeProduct(stockFreeItem, promotionalItem, purchasedItems, TRUE);
+            purchasedItem = processPromotionItems(stock, promotionalItem, purchasedItems, stockFreeItem, stockForPay);
         }
 
-        if (stockForPay.getStock() == promotionalItem.getBuyStockByFreeStock(stockFreeItem.getStock())){
-            store.setMembership(false);
-        }
-
+        setMembership(promotionalItem, store, stockForPay, stockFreeItem);
         return purchasedItem;
-    }
-
-    //TODO : 메서드 길이 줄이기
-    private static void promotionProcess(Stock stock, Item promotionalItem, Stock stockFreeItem, Stock stockForPay) {
-        int stockForPromotionItem = promotionalItem.getTotalBuyStock(stock.getStock(), promotionalItem.getStockCount());
-        int freeStock = promotionalItem.calculateFreeStock(stockForPromotionItem);
-
-        stockFreeItem.plus(freeStock);
-        stockForPay.plus( stockForPromotionItem);
-
-        promotionalItem.updateStock(stockForPromotionItem + freeStock);
-        stock.minus (stockForPromotionItem + freeStock);
-        int remainingStock = processRemainingPromotionStock(promotionalItem, stock);
-        promotionalItem.updateStock(remainingStock);
-        stock.minus(remainingStock);
-        stockForPay.plus(remainingStock);
-
     }
 
     public static int processRemainingPromotionStock(Item promotionalItem, Stock remainStock) {
         return Math.min(promotionalItem.getStockCount(), remainStock.getStock());
+    }
+
+    private void setMembership(Item promotionalItem, Store store, Stock stockForPay, Stock stockFreeItem) {
+        if (stockForPay.getStock() == promotionalItem.getBuyStockByFreeStock(stockFreeItem.getStock())) {
+            store.setMembership(false);
+        }
+    }
+
+    private Item processPromotionItems(Stock stock, Item promotionalItem, List<Item> purchasedItems, Stock stockFreeItem,
+                                       Stock stockForPay) {
+        Item purchasedItem;
+        promotionProcess(stock, promotionalItem, stockFreeItem, stockForPay);
+        purchasedItem = new Item(promotionalItem, stockForPay, FALSE);
+        addFreeProduct(stockFreeItem, promotionalItem, purchasedItems, TRUE);
+        return purchasedItem;
+    }
+
+    private static void promotionProcess(Stock stock, Item promotionalItem, Stock stockFreeItem, Stock stockForPay) {
+        int stockForPromotionItem = promotionalItem.getTotalBuyStock(stock.getStock(), promotionalItem.getStockCount());
+        int freeStock = promotionalItem.calculateFreeStock(stockForPromotionItem);
+
+        updatePromotionItems(promotionalItem, stockFreeItem, stockForPay, freeStock, stockForPromotionItem);
+
+        stock.minus(stockForPromotionItem + freeStock);
+        int remainingStock = updateRemainItem(stock, promotionalItem, stockForPay);
+        stock.minus(remainingStock);
+    }
+
+    private static int updateRemainItem(Stock stock, Item promotionalItem, Stock stockForPay) {
+        int remainingStock = processRemainingPromotionStock(promotionalItem, stock);
+        promotionalItem.updateStock(remainingStock);
+        stockForPay.plus(remainingStock);
+        return remainingStock;
+    }
+
+    private static void updatePromotionItems(Item promotionalItem, Stock stockFreeItem, Stock stockForPay, int freeStock,
+                                             int stockForPromotionItem) {
+        stockFreeItem.plus(freeStock);
+        stockForPay.plus(stockForPromotionItem);
+        promotionalItem.updateStock(stockForPromotionItem + freeStock);
     }
 }

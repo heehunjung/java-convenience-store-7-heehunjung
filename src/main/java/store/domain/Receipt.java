@@ -1,62 +1,21 @@
 package store.domain;
 
-import static store.global.InputConstant.NO_INPUT_BIG;
-import static store.global.InputConstant.YES_INPUT_BIG;
-import static store.utils.Validator.isUserContinuingWithNo;
-
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
-import store.utils.Validator;
-import store.view.InputView;
+
 
 public class Receipt {
     private final List<Item> items;
     private int totalPrice;
     private int promotionPrice;
-    private boolean isApplyMembership;
+    private boolean membership;
     private int membershipPrice;
 
-    public Receipt(List<Item> items, boolean isApplyMembership) {
+    public Receipt(List<Item> items, boolean membership) {
         this.items = items;
-        this.isApplyMembership = isApplyMembership;
+        this.membership = membership;
     }
 
-    public void notifyStockForFree(Store store, Scanner scanner) {
-        List<Item> newItems = new ArrayList<>(items);
-        for (Item item : newItems) {
-            if (!item.getFree() && item.getPromotion() != null) {
-                compareBuyGet(store, this, item, scanner);
-            }
-        }
-
-    }
-
-    private void compareBuyGet(Store store, Receipt receipt, Item normalItem, Scanner sc) {
-        Item promotionItem = receipt.findPromotionProduct(normalItem);
-        Item promotionItemInStore = store.findPromotionProduct(normalItem.getName());
-        Item itemInStore = store.findProduct(normalItem.getName());
-        if (promotionItemInStore == null) {
-            return;
-        }
-
-        int currentStock = normalItem.getStockCount();
-        int currentFreeStock = promotionItem.getStockCount();
-        int currentPromotionStock = promotionItem.getBuyStockByFreeStock(currentFreeStock);
-        int moreFreeStock = promotionItemInStore.getTotalBuyStock(currentStock - currentPromotionStock + 1,
-                promotionItemInStore.getStockCount());
-        String yesOrNO = NO_INPUT_BIG;
-        if (moreFreeStock > 0) {
-            yesOrNO = InputView.getMoreFreeStock(sc, normalItem.getName(), 1);
-        }
-        if (Validator.isUserContinuing(yesOrNO)) {
-            promotionItem.addStock(1);
-            promotionItemInStore.updateStock(1 + moreFreeStock);
-            itemInStore.addStock(moreFreeStock);
-        }
-    }
-
-    private Item findPromotionProduct(Item promotionItem) {
+    public Item findPromotionProduct(Item promotionItem) {
         for (Item item : items) {
             if (item.getName().equals(promotionItem.getName()) && (item.getFree())) {
                 return item;
@@ -67,7 +26,11 @@ public class Receipt {
         return newItem;
     }
 
-    private Item findPromotionProductWithNull(Item promotionItem) {
+    public void setMembership(boolean membership) {
+        this.membership = membership;
+    }
+
+    public Item findPromotionProductWithNull(Item promotionItem) {
         for (Item item : items) {
             if (item.getName().equals(promotionItem.getName()) && (item.getPromotion() != null)) {
                 return item;
@@ -82,26 +45,6 @@ public class Receipt {
             if (item.getFree()) {
                 promotionPrice += item.calculatePrice();
             }
-        }
-    }
-
-    public void checkMembership() {
-        for (Item item : items) {
-            if (!item.getFree()) {
-                Item promotionItem = findPromotionProductWithNull(item);
-                compareBuyGet(item, promotionItem);
-            }
-        }
-    }
-
-    public void compareBuyGet(Item item, Item promotionItem) {
-        if (promotionItem == null) {
-            isApplyMembership = true;
-            return;
-        }
-        int current = item.getStockCount() - item.getBuyStockByFreeStock(promotionItem.getStockCount());
-        if (item.getStockCount() != item.getBuyStockByFreeStock(promotionItem.getStockCount())) {
-            isApplyMembership = true;
         }
     }
 
@@ -123,8 +66,8 @@ public class Receipt {
         return total;
     }
 
-    public boolean isApplyMembership() {
-        return isApplyMembership;
+    public boolean getMembership() {
+        return membership;
     }
 
     public List<Item> getProducts() {
@@ -145,62 +88,22 @@ public class Receipt {
 
     public Integer applyMembership() {
         System.out.println();
-        int discountPrice = 0 ;
+        int discountPrice = 0;
         for (Item item : items) {
             if (item.getFree()) {
                 int buyStock = item.getBuyStockByFreeStock(item.getStockCount());
                 discountPrice += buyStock * item.getPrice();
             }
         }
-        if (isApplyMembership()) {
-            membershipPrice = Math.min((int) ((totalPrice - promotionPrice - discountPrice) * 0.3), 8000);
-            return membershipPrice;
+        if (getMembership()) {
+            return calculateMembershipPrice(discountPrice);
         }
         return 0;
     }
 
-    public void notifyPurchasedInfo(Store store, Scanner scanner) {
-        for (Item item : items) {
-            if (!item.getFree()) {
-               isNotApplyPromotion(scanner,store,item);
-            }
-
-        }
+    public int calculateMembershipPrice(int discountPrice) {
+        membershipPrice = Math.min((int) ((totalPrice - promotionPrice - discountPrice) * 0.3), 8000);
+        return membershipPrice;
     }
 
-    private void isNotApplyPromotion(Scanner sc, Store store, Item item) {
-        Item promotionItemInStore = store.findPromotionProduct(item.getName());
-        Item freeItem = findPromotionProductWithNull(item);
-        String isPurchase = YES_INPUT_BIG;
-        if (promotionItemInStore == null || freeItem == null) {
-            return;
-        }
-        int getCount = promotionItemInStore.getBuyStock();
-        int freeStock = freeItem.getStockCount();
-        int currentBuyStockByPromotion = item.getBuyStockByFreeStock(freeStock);
-        int currentBuyStockWithNoPromotion = item.getStockCount() - currentBuyStockByPromotion;
-        if (getCount <= currentBuyStockWithNoPromotion) {
-            isPurchase = InputView.getAgreeBuyWithNoPromotion(sc,item.getName(),currentBuyStockWithNoPromotion);
-        }
-        if (isUserContinuingWithNo(isPurchase)) {
-            notPurchase(store,item,currentBuyStockWithNoPromotion);
-        }
-    }
-
-    private void notPurchase(Store store, Item item, int stock) {
-        Item promotionItemInStore = store.findPromotionProduct(item.getName());
-        Item itemInStore = store.findProduct(item.getName());
-
-        int totalItemInStore = itemInStore.getTotalStock();
-
-        int refundStock = Math.min(stock, totalItemInStore - itemInStore.getStockCount());
-        itemInStore.addStock(refundStock);
-        item.updateStock(refundStock);
-        stock -= refundStock;
-
-        if (stock > 0) {
-            promotionItemInStore.addStock(stock);
-            item.updateStock(stock);
-        }
-    }
 }
