@@ -1,6 +1,8 @@
 package store.controller;
 
 import static store.domain.Store.addPurchaseProduct;
+import static store.global.InputConstant.YES_INPUT_BIG;
+import static store.utils.Validator.isUserContinuing;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -39,38 +41,50 @@ public class FrontController {
     public void run() throws IOException {
         Scanner scanner = new Scanner(System.in);
         List<Promotion> promotions = getPromotions();
-
         List<Item> items = getItems(promotions);
 
-        String isContinue = "Y";
         Store store = new Store(items, promotions);
+        String isContinue = YES_INPUT_BIG;
 
         itemController.checkItems(items,store);
 
-        while(isContinue.equals("Y") || isContinue.equals("y")) {
-            printStoreInfo(store);
-
-            Map<String, Stock> itemAndStock = getStringStockMap(scanner,store);
-
-            String membershipInput = getMembership(scanner);
-
-            List<Item> purchasedItems = buyProcess(itemAndStock, store);
-
-            Receipt receipt = new Receipt(purchasedItems, false);
-
-            receipt.notifyStockForFree(store,scanner);
-            receipt.notifyPurchasedInfo(store,scanner);
-            receipt.calculatePrice();
-
-
-            if (membershipInput.equals("Y") || membershipInput.equals("y")) {
-                receipt.checkMembership();
-            }
-
-            OutputView.printReceipt(receipt);
-            isContinue = InputView.getEndingMessage(scanner);
-            Validator.YesOrNoValidator(isContinue);
+        while(isUserContinuing(isContinue)) {
+            isContinue = processPurchaseInStore(store, scanner);
         }
+    }
+
+    private String processPurchaseInStore(Store store, Scanner scanner) {
+        String isContinue;
+        printStoreInfo(store);
+
+        Map<String, Stock> itemAndStock = getStringStockMap(scanner, store);
+
+        String membershipInput = getMembership(scanner);
+
+        List<Item> purchasedItems = buyProcess(itemAndStock, store);
+
+        Receipt receipt = new Receipt(purchasedItems, false);
+        receiptMagic(store, scanner, receipt, membershipInput);
+
+        return isContinue(scanner);
+    }
+
+    private String isContinue(Scanner scanner) {
+        String isContinue;
+        isContinue = InputView.getEndingMessage(scanner);
+        Validator.YesOrNoValidator(isContinue);
+        return isContinue;
+    }
+
+    private void receiptMagic(Store store, Scanner scanner, Receipt receipt, String membershipInput) {
+        receipt.notifyStockForFree(store, scanner);
+        receipt.notifyPurchasedInfo(store, scanner);
+        receipt.calculatePrice();
+
+        if (isUserContinuing(membershipInput)) {
+            receipt.checkMembership();
+        }
+        OutputView.printReceipt(receipt);
     }
 
     private void printStoreInfo(Store store) {
